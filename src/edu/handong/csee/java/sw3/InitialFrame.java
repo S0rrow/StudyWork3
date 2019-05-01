@@ -94,7 +94,12 @@ public class InitialFrame {
 			//System.out.println("Conditions for signing in satisfied.");
 			//System.out.println("calling new Frame...");
 			if(connection.getElement(username, "super").equals("NO")) {
-				new AccountInfoFrame(username);
+				//new AccountInfoFrame(username);
+				SwingUtilities.invokeLater(new Runnable() {
+					public void run() {
+						new MemoCalendar();
+					}
+				});
 				mainFrame.dispose();
 			}
 			else if(connection.getElement(username, "super").equals("YES")) {

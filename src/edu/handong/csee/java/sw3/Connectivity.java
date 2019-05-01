@@ -5,9 +5,9 @@ import java.util.Vector;
 
 public class Connectivity {
 	static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
-	static final String DB_URL = "jdbc:mysql://localhost:3306/testdb?characterEncoding=UTF-8&serverTimezone=UTC";
+	static final String DB_URL = "jdbc:mysql://localhost:3306/testdb?characterEncoding=UTF-8&serverTimezone=UTC";//&serverTimezone=UTC
 	static final String USER = "root";
-	static final String PASS = "root";
+	static final String PASS = "-legion98";
 	public Connection connect;
 	public Statement statement;
 	public PreparedStatement preparedStatement;
