@@ -8,85 +8,12 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import javax.swing.*;
 
-class CalendarDataManager { // class to get 6*7arrays to contain calendar result
-   static final int CAL_WIDTH = 7;
-   final static int CAL_HEIGHT = 6;
-   int calDates[][] = new int[CAL_HEIGHT][CAL_WIDTH];
-   int calYear;
-   int calMonth;
-   int calDayOfMon;
-   final int calLastDateOfMonth[] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
-   int calLastDate;
-   Calendar today = Calendar.getInstance();
-   Calendar cal;
-
-   public CalendarDataManager() {
-      setToday();
-   }
-
-   public void setToday() {
-      calYear = today.get(Calendar.YEAR);
-      calMonth = today.get(Calendar.MONTH);
-      calDayOfMon = today.get(Calendar.DAY_OF_MONTH);
-      makeCalData(today);
-   }
-
-   private void makeCalData(Calendar cal) {
-      // get first date's position and late date
-      int calStartingPos = (cal.get(Calendar.DAY_OF_WEEK) + 7 - (cal.get(Calendar.DAY_OF_MONTH)) % 7) % 7;
-      if (calMonth == 1)
-         calLastDate = calLastDateOfMonth[calMonth] + leapCheck(calYear);
-      else
-         calLastDate = calLastDateOfMonth[calMonth];
-      // initialize calendar array
-      for (int i = 0; i < CAL_HEIGHT; i++) {
-         for (int j = 0; j < CAL_WIDTH; j++) {
-            calDates[i][j] = 0;
-         }
-      }
-      // fill values to the calendar array
-      for (int i = 0, num = 1, k = 0; i < CAL_HEIGHT; i++) {
-         if (i == 0)
-            k = calStartingPos;
-         else
-            k = 0;
-         for (int j = k; j < CAL_WIDTH; j++) {
-            if (num <= calLastDate)
-               calDates[i][j] = num++;
-         }
-      }
-   }
-
-   private int leapCheck(int year) { // check leap year
-      if (year % 4 == 0 && year % 100 != 0 || year % 400 == 0)
-         return 1;
-      else
-         return 0;
-   }
-
-   public void moveMonth(int mon) { // move nth before or after's month form this month(can move +12,-12 by moving a year)
-      calMonth += mon;
-      if (calMonth > 11)
-         while (calMonth > 11) {
-            calYear++;
-            calMonth -= 12;
-         }
-      else if (calMonth < 0)
-         while (calMonth < 0) {
-            calYear--;
-            calMonth += 12;
-         }
-      cal = new GregorianCalendar(calYear, calMonth, calDayOfMon);
-      makeCalData(cal);
-   }
-}
-
 public class MemoCalendar extends CalendarDataManager { // GUI of CalendarDataManager + Memo + Clock
    // frame component and layout
    JFrame mainFrame;
-//   ImageIcon icon = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("icon.png")));
+    //   ImageIcon icon = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("icon.png")));
    ImageIcon icon = new ImageIcon();
-   
+
    JPanel calOpPanel;
    JButton todayBut;
    JLabel todayLab;
@@ -105,11 +32,11 @@ public class MemoCalendar extends CalendarDataManager { // GUI of CalendarDataMa
    JPanel infoPanel;
    JLabel infoClock;
 
-   JPanel memoPanel;
+   //JPanel memoPanel;
    JLabel selectedDate;
-   JTextArea memoArea;
-   JScrollPane memoAreaSP;
-   JPanel memoSubPanel;
+   //JTextArea memoArea;
+   //JScrollPane memoAreaSP;
+   //JPanel memoSubPanel;
    JButton saveBut;
    JButton delBut;
    JButton clearBut;
@@ -127,16 +54,17 @@ public class MemoCalendar extends CalendarDataManager { // GUI of CalendarDataMa
    final String DelButMsg3 = "<html><font color=red>ERROR : Failed to delete file</html>";
    final String ClrButMsg1 = "Cleared the memo.";
 
+
    public MemoCalendar() { // Aligned by component. Blank lines between each panel
 
       mainFrame = new JFrame(title);
       mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-      mainFrame.setSize(700, 400);
+      mainFrame.setSize(1000, 800);
       mainFrame.setLocationRelativeTo(null);
       mainFrame.setResizable(false);
       mainFrame.setIconImage(icon.getImage());
       try {
-         UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");// apply LookAndFeel Windows 
+         UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");// apply LookAndFeel Windows
          SwingUtilities.updateComponentTreeUI(mainFrame);
       } catch (Exception e) {
          bottomInfo.setText("ERROR : LookAndFeel setting failed");
@@ -242,20 +170,20 @@ public class MemoCalendar extends CalendarDataManager { // GUI of CalendarDataMa
             SwingConstants.LEFT);
       selectedDate.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 0));
 
-      memoPanel = new JPanel();
-      memoPanel.setBorder(BorderFactory.createTitledBorder("Memo"));
-      memoArea = new JTextArea();
-      memoArea.setLineWrap(true);
-      memoArea.setWrapStyleWord(true);
-      memoAreaSP = new JScrollPane(memoArea, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
-            JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-      readMemo();
+      //memoPanel = new JPanel();
+      //memoPanel.setBorder(BorderFactory.createTitledBorder("Memo"));
+      //memoArea = new JTextArea();
+      //memoArea.setLineWrap(true);
+      //memoArea.setWrapStyleWord(true);
+      //memoAreaSP = new JScrollPane(memoArea, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+            //JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+      //readMemo();
 
-      memoSubPanel = new JPanel();
+      //memoSubPanel = new JPanel();
       saveBut = new JButton("Save");
       saveBut.addActionListener(new ActionListener() {
          public void actionPerformed(ActionEvent arg0) {
-            try {
+          /* try {
                File f = new File("MemoData");
                if (!f.isDirectory())
                   f.mkdir();
@@ -275,13 +203,14 @@ public class MemoCalendar extends CalendarDataManager { // GUI of CalendarDataMa
             } catch (IOException e) {
                bottomInfo.setText(SaveButMsg3);
             }
+            */
             showCal();
          }
       });
       delBut = new JButton("Delete");
       delBut.addActionListener(new ActionListener() {
          public void actionPerformed(ActionEvent e) {
-            memoArea.setText("");
+            //memoArea.setText("");
             File f = new File("MemoData/" + calYear + ((calMonth + 1) < 10 ? "0" : "") + (calMonth + 1)
                   + (calDayOfMon < 10 ? "0" : "") + calDayOfMon + ".txt");
             if (f.exists()) {
@@ -295,17 +224,17 @@ public class MemoCalendar extends CalendarDataManager { // GUI of CalendarDataMa
       clearBut = new JButton("Clear");
       clearBut.addActionListener(new ActionListener() {
          public void actionPerformed(ActionEvent arg0) {
-            memoArea.setText(null);
+            //memoArea.setText(null);
             bottomInfo.setText(ClrButMsg1);
          }
       });
-      memoSubPanel.add(saveBut);
-      memoSubPanel.add(delBut);
-      memoSubPanel.add(clearBut);
-      memoPanel.setLayout(new BorderLayout());
-      memoPanel.add(selectedDate, BorderLayout.NORTH);
-      memoPanel.add(memoAreaSP, BorderLayout.CENTER);
-      memoPanel.add(memoSubPanel, BorderLayout.SOUTH);
+      //memoSubPanel.add(saveBut);
+      //memoSubPanel.add(delBut);
+      //memoSubPanel.add(clearBut);
+      //memoPanel.setLayout(new BorderLayout());
+      //memoPanel.add(selectedDate, BorderLayout.NORTH);
+      //memoPanel.add(memoAreaSP, BorderLayout.CENTER);
+      //memoPanel.add(memoSubPanel, BorderLayout.SOUTH);
 
       // arrange calOpPanel, calPanel at frameSubPanelWest
       JPanel frameSubPanelWest = new JPanel();
@@ -323,10 +252,10 @@ public class MemoCalendar extends CalendarDataManager { // GUI of CalendarDataMa
       infoPanel.setPreferredSize(infoPanelSize);
       frameSubPanelEast.setLayout(new BorderLayout());
       frameSubPanelEast.add(infoPanel, BorderLayout.NORTH);
-      frameSubPanelEast.add(memoPanel, BorderLayout.CENTER);
+      //frameSubPanelEast.add(memoPanel, BorderLayout.CENTER);
 
       Dimension frameSubPanelWestSize = frameSubPanelWest.getPreferredSize();
-      frameSubPanelWestSize.width = 410;
+      frameSubPanelWestSize.width = 1000;
       frameSubPanelWest.setPreferredSize(frameSubPanelWestSize);
 
       // late added bottom Panel..
@@ -354,7 +283,7 @@ public class MemoCalendar extends CalendarDataManager { // GUI of CalendarDataMa
          dateButs[today.get(Calendar.WEEK_OF_MONTH) - 1][today.get(Calendar.DAY_OF_WEEK) - 1].requestFocusInWindow();
    }
 
-   private void readMemo() {
+   /*private void readMemo() {
       try {
          File f = new File("MemoData/" + calYear + ((calMonth + 1) < 10 ? "0" : "") + (calMonth + 1)
                + (calDayOfMon < 10 ? "0" : "") + calDayOfMon + ".txt");
@@ -376,7 +305,7 @@ public class MemoCalendar extends CalendarDataManager { // GUI of CalendarDataMa
       } catch (IOException e) {
          e.printStackTrace();
       }
-   }
+   }*/
 
    private void showCal() {
       for (int i = 0; i < CAL_HEIGHT; i++) {
@@ -391,7 +320,7 @@ public class MemoCalendar extends CalendarDataManager { // GUI of CalendarDataMa
                   + (calDates[i][j] < 10 ? "0" : "") + calDates[i][j] + ".txt");
             if (f.exists()) {
                dateButs[i][j]
-                     .setText("<html><b><font color=" + fontColor + ">" + calDates[i][j] + "</font></b></html>");
+                     .setText("<html><font color=" + fontColor + ">" + calDates[i][j] + "</font></html>");
             } else
                dateButs[i][j].setText("<html><font color=" + fontColor + ">" + calDates[i][j] + "</font></html>");
 
@@ -463,7 +392,7 @@ public class MemoCalendar extends CalendarDataManager { // GUI of CalendarDataMa
          selectedDate.setText("<Html><font size=3>" + (calMonth + 1) + "/" + calDayOfMon + "/" + calYear + "&nbsp;("
                + dDayString + ")</html>");
 
-         readMemo();
+         //readMemo();
       }
    }
 
