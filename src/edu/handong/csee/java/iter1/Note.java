@@ -6,5 +6,5 @@ public interface Note {
 	
 	abstract public String load(String filepath);
 	abstract public String[] parse(String filepath);
-	abstract public void callback(JFrame scheduler);
+	abstract public void callback();
 }

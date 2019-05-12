@@ -2,12 +2,11 @@ package edu.handong.csee.java.iter1;
 
 import javax.swing.JFrame;
 
-public class NoteEdit implements Note{
-	private String filepath;
-	
+@SuppressWarnings("serial")
+public class NoteEdit extends JFrame implements Note{
 	NoteEdit(String filepath){
 		super();
-		this.filepath = filepath;
+		load(filepath);
 	}
 	
 	@Override
@@ -23,9 +22,12 @@ public class NoteEdit implements Note{
 	}
 
 	@Override
-	public void callback(JFrame scheduler) {
+	public void callback() {
 		// TODO Auto-generated method stub
-		
+		new MemoCalendar();
+		this.dispose();
 	}
+	
+	
 
 }

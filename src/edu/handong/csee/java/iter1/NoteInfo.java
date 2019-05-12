@@ -2,13 +2,13 @@ package edu.handong.csee.java.iter1;
 
 import javax.swing.JFrame;
 
-public class NoteInfo implements Note{
-	
-	private String filepath;
+@SuppressWarnings("serial")
+public class NoteInfo extends JFrame implements Note{
 	
 	NoteInfo(String filepath){
 		super();
-		this.filepath = filepath;
+		load(filepath);
+		
 	}
 
 	@Override
@@ -20,12 +20,14 @@ public class NoteInfo implements Note{
 	@Override
 	public String[] parse(String filepath) {
 		// TODO Auto-generated method stub
-		return null;
+		String[] meta = filepath.split(":");
+		return meta;
 	}
 
 	@Override
-	public void callback(JFrame scheduler) {
+	public void callback() {
 		// TODO Auto-generated method stub
-		
+		new MemoCalendar();
+		this.dispose();
 	}
 }
