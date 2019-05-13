@@ -4,10 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import javax.swing.*;
@@ -70,6 +68,7 @@ public class Scheduler {
 		start();
 	}
 
+	@SuppressWarnings("serial")
 	public void start() {
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainFrame.setSize(1200, 400);
@@ -95,7 +94,12 @@ public class Scheduler {
 		
 		
 		columnNames[0] = "회의 이름";
-		model = new DefaultTableModel(rowData,columnNames);
+		model = new DefaultTableModel(rowData,columnNames) {
+			@Override
+			public boolean isCellEditable(int row, int col) {
+				return false;
+			}
+		};
 		List = new JTable(model);
 		List.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		
@@ -110,7 +114,8 @@ public class Scheduler {
 		memoAreaSP = new JScrollPane(memoArea, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		//readMemo();
-*/
+		 *
+*/		cp.readSchedule();
 		memoSubPanel = new JPanel();
 		saveBut = new JButton("Save");
 		saveBut.addActionListener(fl);
@@ -127,7 +132,7 @@ public class Scheduler {
 		addBut = new JButton("Add");
 		addBut.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new ScheduleList(data);
+				new ScheduleList(cp, data);
 				
 				bottomInfo.setText(addMsg);
 				

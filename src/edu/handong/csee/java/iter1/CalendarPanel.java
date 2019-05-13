@@ -233,7 +233,7 @@ public class CalendarPanel {
 		}
 	}
 	
-	private void readSchedule() {
+	public void readSchedule() {
 		try {
             File f = new File(("ListData/" + data.calYear + ((data.calMonth + 1) < 10 ? "0" : "") + (data.calMonth + 1)
                     + (data.calDayOfMon < 10 ? "0" : "") + data.calDayOfMon + ".txt"));

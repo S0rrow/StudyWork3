@@ -1,7 +1,6 @@
 package edu.handong.csee.java.iter1;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
@@ -14,10 +13,9 @@ import java.io.IOException;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.table.DefaultTableModel;
 
+@SuppressWarnings("serial")
 public class ScheduleList extends JFrame {
 	
 	private JTextField textField;
@@ -39,7 +37,7 @@ public class ScheduleList extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	ScheduleList(CalendarDataManager cdm) {
+	ScheduleList(CalendarPanel cp, CalendarDataManager cdm) {
         setTitle("LIST 추가");
        
         // 주의, 여기서 setDefaultCloseOperation() 정의를 하지 말아야 한다
@@ -105,7 +103,9 @@ public class ScheduleList extends JFrame {
                         else {
                         	System.out.println("no file");
                         }
-                        setVisible(false);
+                        //setVisible(false);
+                        cp.readSchedule();
+                        dispose();
                        // bottomInfo.setText(calYear + ((calMonth + 1) < 10 ? "0" : "") + (calMonth + 1)
                             //  + (calDayOfMon < 10 ? "0" : "") + calDayOfMon + ".txt" + SaveButMsg1);
                     // } //else {}
@@ -122,8 +122,8 @@ public class ScheduleList extends JFrame {
             // 만들어진 버튼 "새 창 띄우기"에 버튼이 눌러지면 발생하는 행동을 정의
             @Override
             public void actionPerformed(ActionEvent e) {
-            	setVisible(false);
-            	
+            	//setVisible(false);
+            	dispose();
             }
             
         });
