@@ -11,6 +11,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+
 
 public class Scheduler {
 	// user data and db connectivity
@@ -24,11 +26,13 @@ public class Scheduler {
 	JPanel infoPanel;
 	JLabel infoClock;
 
-	JPanel memoPanel;
+	//JPanel memoPanel;
+	JPanel ListPanel;
 	JLabel selectedDate;
 	JTextArea memoArea;
-	JScrollPane memoAreaSP;
+	JScrollPane scrollPane;
 	JPanel memoSubPanel;
+	JButton addBut;
 	JButton saveBut;
 	JButton delBut;
 	JButton clearBut;
@@ -46,6 +50,12 @@ public class Scheduler {
 	final String DelButMsg2 = "Not written or already deleted memo.";
 	final String DelButMsg3 = "<html><font color=red>ERROR : Failed to delete file</html>";
 	final String ClrButMsg1 = "Cleared the memo.";
+	final String addMsg = "add";
+	public static JTable List;
+	 static Object[][] rowData = new Object[1][1];
+	 static Object[] columnNames = new Object[1];
+
+	static DefaultTableModel model = new DefaultTableModel(rowData,columnNames);
 
 	CalendarPanel cp;
 
@@ -53,6 +63,7 @@ public class Scheduler {
 		super();
 		connection = mainConnection;
 		username = userName;
+		
 		data = cdm;
 		mainFrame = new JFrame("Scheduler");
 		cp = new CalendarPanel(username, connection, data, mainFrame);
@@ -61,7 +72,7 @@ public class Scheduler {
 
 	public void start() {
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		mainFrame.setSize(700, 400);
+		mainFrame.setSize(1200, 400);
 		mainFrame.setLocationRelativeTo(null);
 		mainFrame.setResizable(false);
 		mainFrame.setIconImage(icon.getImage());
@@ -78,13 +89,28 @@ public class Scheduler {
 		infoPanel.add(infoClock, BorderLayout.NORTH);
 		selectedDate = cp.selectedDate;
 
-		memoPanel = new JPanel();
+		ListPanel = new JPanel();
+		ListPanel.setBorder(BorderFactory.createTitledBorder("LIST"));
+		ListPanel.setLayout(new BorderLayout());
+		
+		
+		columnNames[0] = "회의 이름";
+		model = new DefaultTableModel(rowData,columnNames);
+		List = new JTable(model);
+		List.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+		
+		
+		
+		
+	
+		
+		/*memoPanel = new JPanel();
 		memoPanel.setBorder(BorderFactory.createTitledBorder("Memo"));
 		memoArea = cp.memoArea;
 		memoAreaSP = new JScrollPane(memoArea, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		readMemo();
-
+		//readMemo();
+*/
 		memoSubPanel = new JPanel();
 		saveBut = new JButton("Save");
 		saveBut.addActionListener(fl);
@@ -97,26 +123,45 @@ public class Scheduler {
 				bottomInfo.setText(ClrButMsg1);
 			}
 		});
+		
+		addBut = new JButton("Add");
+		addBut.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new ScheduleList(data);
+				
+				bottomInfo.setText(addMsg);
+				
+				
+
+			}
+		});
+		
+		ListPanel.setLayout(new BorderLayout());
+		ListPanel.add(selectedDate, BorderLayout.NORTH);
+		ListPanel.add(List, BorderLayout.CENTER);
+		scrollPane = new JScrollPane(List);
+		ListPanel.add(scrollPane, BorderLayout.EAST);
+		ListPanel.add(memoSubPanel, BorderLayout.SOUTH);
+		memoSubPanel.add(addBut);
 		memoSubPanel.add(saveBut);
 		memoSubPanel.add(delBut);
 		memoSubPanel.add(clearBut);
-		memoPanel.setLayout(new BorderLayout());
-		memoPanel.add(selectedDate, BorderLayout.NORTH);
-		memoPanel.add(memoAreaSP, BorderLayout.CENTER);
-		memoPanel.add(memoSubPanel, BorderLayout.SOUTH);
+		
+	  
 
 		// arrange infoPanel, memoPanel at frameSubPanelEast에 배치
 		JPanel frameSubPanelEast = new JPanel();
+		
 		Dimension infoPanelSize = infoPanel.getPreferredSize();
 		infoPanelSize.height = 65;
 		infoPanel.setPreferredSize(infoPanelSize);
 		frameSubPanelEast.setLayout(new BorderLayout());
 		frameSubPanelEast.add(infoPanel, BorderLayout.NORTH);
-		frameSubPanelEast.add(memoPanel, BorderLayout.CENTER);
+		frameSubPanelEast.add(ListPanel, BorderLayout.CENTER);
 
 		JPanel frameSubPanelWest = cp.frameSubPanelWest;
 		Dimension frameSubPanelWestSize = frameSubPanelWest.getPreferredSize();
-		frameSubPanelWestSize.width = 410;
+		frameSubPanelWestSize.width = 610;
 		frameSubPanelWest.setPreferredSize(frameSubPanelWestSize);
 
 		// late added bottom Panel..
@@ -133,7 +178,7 @@ public class Scheduler {
 		ThreadControl threadCnl = new ThreadControl(data, infoClock, bottomInfo);
 		threadCnl.start();
 	}
-
+/*
 	private void readMemo() {
 		try {
 			File f = new File("MemoData/" + data.calYear + ((data.calMonth + 1) < 10 ? "0" : "") + (data.calMonth + 1)
@@ -157,6 +202,10 @@ public class Scheduler {
 			e.printStackTrace();
 		}
 	}
+	*/
+	
+
+
 
 	private class FileButListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {

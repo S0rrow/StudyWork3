@@ -19,7 +19,7 @@ import java.util.GregorianCalendar;
 
 import javax.swing.*;
 
-public class CalendarPanel {
+public class CalendarPanel { 
 	private String username;
 	Connectivity connection;
 	CalendarDataManager data;
@@ -87,9 +87,6 @@ public class CalendarPanel {
 				+ data.today.get(Calendar.DAY_OF_MONTH) + "/" + data.today.get(Calendar.YEAR) + "&nbsp;(Today)</html>",
 				SwingConstants.LEFT);
 		selectedDate.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 0));
-		memoArea = new JTextArea();
-		memoArea.setLineWrap(true);
-		memoArea.setWrapStyleWord(true);
 		assignGrid();
 
 		calPanel = new JPanel();
@@ -235,7 +232,57 @@ public class CalendarPanel {
 			}
 		}
 	}
+	
+	private void readSchedule() {
+		try {
+            File f = new File(("ListData/" + data.calYear + ((data.calMonth + 1) < 10 ? "0" : "") + (data.calMonth + 1)
+                    + (data.calDayOfMon < 10 ? "0" : "") + data.calDayOfMon + ".txt"));
 
+            	
+        //    if (memo.length() > 0) {
+            
+            Scheduler.model.setNumRows(0);
+               //MemoCalendar.List = new JTable(new DefaultTableModel(MemoCalendar.rowData,MemoCalendar.columnNames));
+               if(f.exists()) {
+               	BufferedReader in = new BufferedReader(
+               			new FileReader("ListData/" + data.calYear + ((data.calMonth + 1) < 10 ? "0" : "") + (data.calMonth + 1)
+                                   + (data.calDayOfMon < 10 ? "0" : "") + data.calDayOfMon + ".txt"));
+               	String ListName1 = new String();
+               	
+               	while(true) {
+               		String tempStr = in.readLine();
+               		if(tempStr ==null)
+               			break;
+               		
+               		ListName1 =ListName1+ tempStr + System.getProperty("line.separator");
+               	}
+                in.close();
+           		//DefaultTableModel model = (DefaultTableModel) MemoCalendar.model;
+           		String arr[] = new String[1];
+           		arr[0]=ListName1;
+           		Scheduler.model.addRow(arr);
+           		//MemoCalendar.rowData[0][0] = ListName1;
+           		//MemoCalendar.model = new DefaultTableModel(MemoCalendar.rowData,MemoCalendar.columnNames);
+           	   }
+               else {
+            	   
+            	   int rows = Scheduler.model.getRowCount();
+            	   for(int i=0;i<rows;i++)
+            	   Scheduler.model.removeRow(i);
+            	   //model.setNumRows(0);
+            	   
+            	   }
+              // bottomInfo.setText(calYear + ((calMonth + 1) < 10 ? "0" : "") + (calMonth + 1)
+                   //  + (calDayOfMon < 10 ? "0" : "") + calDayOfMon + ".txt" + SaveButMsg1);
+           // } //else {}
+              // bottomInfo.setText(SaveButMsg2);
+         } catch (IOException e) {
+            //bottomInfo.setText("Fail");
+         }
+         
+      }
+
+/*
 	private void readMemo() {
 		try {
 			File f = new File("MemoData/" + data.calYear + ((data.calMonth + 1) < 10 ? "0" : "") + (data.calMonth + 1)
@@ -258,7 +305,7 @@ public class CalendarPanel {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 
 	private class ListenForCalOpButtons implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
@@ -314,7 +361,7 @@ public class CalendarPanel {
 			selectedDate.setText("<Html><font size=3>" + (data.calMonth + 1) + "/" + data.calDayOfMon + "/"
 					+ data.calYear + "&nbsp;(" + dDayString + ")</html>");
 
-			readMemo();
+			readSchedule();
 		}
 	}
 	
