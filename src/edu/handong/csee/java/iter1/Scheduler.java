@@ -35,6 +35,7 @@ public class Scheduler {
 
 	JPanel frameBottomPanel;
 	JLabel bottomInfo = new JLabel("Welcome to Memo Calendar!");
+	FileButListener fl = new FileButListener();
 
 	final static String WEEK_DAY_NAME[] = { "SUN", "MON", "TUE", "WED", "THR", "FRI", "SAT" };
 	final String title = "Memocalendar ver 1.0";
@@ -47,17 +48,18 @@ public class Scheduler {
 	final String ClrButMsg1 = "Cleared the memo.";
 
 	CalendarPanel cp;
+
 	Scheduler(String userName, Connectivity mainConnection, CalendarDataManager cdm) {
 		super();
 		connection = mainConnection;
 		username = userName;
 		data = cdm;
-		cp = new CalendarPanel(username, data);
+		mainFrame = new JFrame("Scheduler");
+		cp = new CalendarPanel(username, connection, data, mainFrame);
 		start();
 	}
 
 	public void start() {
-		mainFrame = new JFrame("Scheduler");
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainFrame.setSize(700, 400);
 		mainFrame.setLocationRelativeTo(null);
@@ -85,45 +87,9 @@ public class Scheduler {
 
 		memoSubPanel = new JPanel();
 		saveBut = new JButton("Save");
-		saveBut.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				try {
-					File f = new File("MemoData");
-					if (!f.isDirectory())
-						f.mkdir();
-
-					String memo = memoArea.getText();
-					if (memo.length() > 0) {
-						BufferedWriter out = new BufferedWriter(new FileWriter(
-								"MemoData/" + data.calYear + ((data.calMonth + 1) < 10 ? "0" : "") + (data.calMonth + 1)
-										+ (data.calDayOfMon < 10 ? "0" : "") + data.calDayOfMon + ".txt"));
-						String str = memoArea.getText();
-						out.write(str);
-						out.close();
-						bottomInfo.setText(data.calYear + ((data.calMonth + 1) < 10 ? "0" : "") + (data.calMonth + 1)
-								+ (data.calDayOfMon < 10 ? "0" : "") + data.calDayOfMon + ".txt" + SaveButMsg1);
-					} else
-						bottomInfo.setText(SaveButMsg2);
-				} catch (IOException e) {
-					bottomInfo.setText(SaveButMsg3);
-				}
-				cp.showCal();
-			}
-		});
+		saveBut.addActionListener(fl);
 		delBut = new JButton("Delete");
-		delBut.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				memoArea.setText("");
-				File f = new File("MemoData/" + data.calYear + ((data.calMonth + 1) < 10 ? "0" : "")
-						+ (data.calMonth + 1) + (data.calDayOfMon < 10 ? "0" : "") + data.calDayOfMon + ".txt");
-				if (f.exists()) {
-					f.delete();
-					cp.showCal();
-					bottomInfo.setText(DelButMsg1);
-				} else
-					bottomInfo.setText(DelButMsg2);
-			}
-		});
+		delBut.addActionListener(fl);
 		clearBut = new JButton("Clear");
 		clearBut.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -138,8 +104,6 @@ public class Scheduler {
 		memoPanel.add(selectedDate, BorderLayout.NORTH);
 		memoPanel.add(memoAreaSP, BorderLayout.CENTER);
 		memoPanel.add(memoSubPanel, BorderLayout.SOUTH);
-
-		// arrange calOpPanel, calPanel at frameSubPanelWest
 
 		// arrange infoPanel, memoPanel at frameSubPanelEast에 배치
 		JPanel frameSubPanelEast = new JPanel();
@@ -191,6 +155,44 @@ public class Scheduler {
 				memoArea.setText("");
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+
+	private class FileButListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			if (e.getSource() == saveBut) {
+				try {
+					File f = new File("MemoData");
+					if (!f.isDirectory())
+						f.mkdir();
+
+					String memo = memoArea.getText();
+					if (memo.length() > 0) {
+						BufferedWriter out = new BufferedWriter(new FileWriter(
+								"MemoData/" + data.calYear + ((data.calMonth + 1) < 10 ? "0" : "") + (data.calMonth + 1)
+										+ (data.calDayOfMon < 10 ? "0" : "") + data.calDayOfMon + ".txt"));
+						String str = memoArea.getText();
+						out.write(str);
+						out.close();
+						bottomInfo.setText(data.calYear + ((data.calMonth + 1) < 10 ? "0" : "") + (data.calMonth + 1)
+								+ (data.calDayOfMon < 10 ? "0" : "") + data.calDayOfMon + ".txt" + SaveButMsg1);
+					} else
+						bottomInfo.setText(SaveButMsg2);
+				} catch (IOException io) {
+					bottomInfo.setText(SaveButMsg3);
+				}
+				cp.showCal();
+			} else if (e.getSource() == delBut) {
+				memoArea.setText("");
+				File f = new File("MemoData/" + data.calYear + ((data.calMonth + 1) < 10 ? "0" : "")
+						+ (data.calMonth + 1) + (data.calDayOfMon < 10 ? "0" : "") + data.calDayOfMon + ".txt");
+				if (f.exists()) {
+					f.delete();
+					cp.showCal();
+					bottomInfo.setText(DelButMsg1);
+				} else
+					bottomInfo.setText(DelButMsg2);
+			}
 		}
 	}
 }

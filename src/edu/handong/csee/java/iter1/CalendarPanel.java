@@ -21,6 +21,7 @@ import javax.swing.*;
 
 public class CalendarPanel {
 	private String username;
+	Connectivity connection;
 	CalendarDataManager data;
 
 	JPanel calPanel;
@@ -29,23 +30,29 @@ public class CalendarPanel {
 
 	JPanel calOpPanel;
 	JButton todayBut;
+	JButton userInfo;
+	JButton logout;
 	JLabel todayLab;
 	JButton lYearBut;
 	JButton lMonBut;
 	JLabel curMMYYYYLab;
 	JButton nMonBut;
 	JButton nYearBut;
+	UserListener ul = new UserListener();
 	ListenForCalOpButtons lForCalOpButtons = new ListenForCalOpButtons();
 	listenForDateButs lForDateButs = new listenForDateButs();
 
 	public JPanel frameSubPanelWest;
-
+	
+	JFrame mainFrame;
 	JTextArea memoArea;
 	JLabel selectedDate;
 
-	CalendarPanel(String userName, CalendarDataManager cdm) {
+	CalendarPanel(String userName, Connectivity mainConnection, CalendarDataManager cdm, JFrame frame) {
 		super();
+		mainFrame = frame;
 		username = userName;
+		connection = mainConnection;
 		data = cdm;
 		calOpPanel = new JPanel();
 		todayBut = new JButton("Today");
@@ -53,6 +60,12 @@ public class CalendarPanel {
 		todayBut.addActionListener(lForCalOpButtons);
 		todayLab = new JLabel(data.today.get(Calendar.MONTH) + 1 + "/" + data.today.get(Calendar.DAY_OF_MONTH) + "/"
 				+ data.today.get(Calendar.YEAR));
+		userInfo = new JButton(username);
+		userInfo.setToolTipText("Open account info");
+		userInfo.addActionListener(ul);
+		logout = new JButton("log out");
+		logout.setToolTipText("Log out to first frame");
+		logout.addActionListener(ul);
 		lYearBut = new JButton("<<");
 		lYearBut.setToolTipText("Previous Year");
 		lYearBut.addActionListener(lForCalOpButtons);
@@ -133,10 +146,26 @@ public class CalendarPanel {
 		calOpGC.anchor = GridBagConstraints.WEST;
 		calOpGC.fill = GridBagConstraints.NONE;
 		calOpPanel.add(todayBut, calOpGC);
-		calOpGC.gridwidth = 3;
+		
 		calOpGC.gridx = 2;
 		calOpGC.gridy = 1;
+		calOpGC.gridwidth = 3;
+		calOpGC.weighty = 1;
 		calOpPanel.add(todayLab, calOpGC);
+		
+		calOpGC.weightx = 1;
+		calOpGC.weighty = 1;
+		calOpGC.fill = GridBagConstraints.NONE;
+		calOpGC.gridwidth = 1;
+		calOpGC.gridx = 4;
+		calOpGC.gridy = 1;
+		calOpPanel.add(userInfo, calOpGC);
+		
+		calOpGC.gridwidth = 1;
+		calOpGC.gridx = 5;
+		calOpGC.gridy = 1;
+		calOpPanel.add(logout, calOpGC);
+		calOpGC.insets = new Insets(5, 5, 0, 0);
 		calOpGC.anchor = GridBagConstraints.CENTER;
 		calOpGC.gridwidth = 1;
 		calOpGC.gridx = 1;
@@ -286,6 +315,22 @@ public class CalendarPanel {
 					+ data.calYear + "&nbsp;(" + dDayString + ")</html>");
 
 			readMemo();
+		}
+	}
+	
+	private class UserListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			if(e.getSource() == userInfo) {
+				System.out.println("calling account info...");
+				new AccountInfoFrame(username, connection, data);
+				mainFrame.dispose();
+			}
+			else if(e.getSource() == logout) {
+				System.out.println("logging out...");
+				InitialFrame newMainFrame = new InitialFrame(connection, data);
+				newMainFrame.initiateFrame();
+				mainFrame.dispose();
+			}
 		}
 	}
 

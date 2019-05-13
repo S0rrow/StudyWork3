@@ -87,14 +87,12 @@ public class AccountInfoFrame extends JFrame{
 				}
 			}
 		});
-		JButton quit = new JButton("Quit");
+		JButton quit = new JButton("Back");
 		quit.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int dialogResult = JOptionPane.showConfirmDialog(null, "Quit?");
-				if(dialogResult==JOptionPane.YES_OPTION) {
-					dispose();
-				}
+				new Scheduler(username, connection, data);
+				dispose();
 			}
 		});
 		buttonContainer.add(edit);
