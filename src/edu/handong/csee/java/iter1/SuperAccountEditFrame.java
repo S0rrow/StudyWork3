@@ -10,10 +10,12 @@ import javax.swing.*;
 @SuppressWarnings("serial")
 public class SuperAccountEditFrame extends JFrame{
 	private Connectivity connection;
+	private CalendarDataManager data;
 	private boolean userIsSuperAccount = false;
-	SuperAccountEditFrame(String username, String superAccount, Connectivity mainConnection){
+	SuperAccountEditFrame(String username, String superAccount, Connectivity mainConnection, CalendarDataManager cdm){
 		//System.out.println("Initiated new AccountEditFrame.")
 		connection = mainConnection;
+		data = cdm;
 		connection.Connect();
 		setTitle("Account Edit");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -158,9 +160,9 @@ public class SuperAccountEditFrame extends JFrame{
 						connection.alterAccountAsSuper(username, alterpassword, choiceGender.getSelection().getActionCommand(), emailAddress, inputDepartment.getText().trim(), inputStudentid.getText().trim(), choiceYesNo.getSelection().getActionCommand());
 						connection.close();
 						if(username.equals(superAccount) && userIsSuperAccount && choiceYesNo.getSelection().getActionCommand().equals("NO")) {
-							new AccountInfoFrame(superAccount, connection);
+							new AccountInfoFrame(superAccount, connection, data);
 						}
-						else new SuperAccountInfoFrame(superAccount, connection);
+						else new SuperAccountInfoFrame(superAccount, connection, data);
 						dispose();
 					}
 				}
@@ -177,10 +179,10 @@ public class SuperAccountEditFrame extends JFrame{
 					//System.out.println("account deleted from database!");
 					connection.close();
 					if(username.equals(superAccount) && userIsSuperAccount && choiceYesNo.getSelection().getActionCommand().equals("NO")) {
-						InitialFrame newMainFrame = new InitialFrame(connection);
+						InitialFrame newMainFrame = new InitialFrame(connection, data);
 						newMainFrame.initiateFrame();
 					}
-					else new SuperAccountInfoFrame(superAccount, connection);
+					else new SuperAccountInfoFrame(superAccount, connection, data);
 					dispose();
 				}
 			}
@@ -190,7 +192,7 @@ public class SuperAccountEditFrame extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				connection.close();
-				new SuperAccountInfoFrame(superAccount, connection);
+				new SuperAccountInfoFrame(superAccount, connection, data);
 				dispose();
 			}
 		});

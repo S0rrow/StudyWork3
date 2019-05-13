@@ -20,7 +20,7 @@ import java.util.GregorianCalendar;
 import javax.swing.*;
 
 public class CalendarPanel {
-
+	private String username;
 	CalendarDataManager data;
 
 	JPanel calPanel;
@@ -35,7 +35,6 @@ public class CalendarPanel {
 	JLabel curMMYYYYLab;
 	JButton nMonBut;
 	JButton nYearBut;
-	Listener listener = new Listener();
 	ListenForCalOpButtons lForCalOpButtons = new ListenForCalOpButtons();
 	listenForDateButs lForDateButs = new listenForDateButs();
 
@@ -44,8 +43,9 @@ public class CalendarPanel {
 	JTextArea memoArea;
 	JLabel selectedDate;
 
-	CalendarPanel(CalendarDataManager cdm) {
+	CalendarPanel(String userName, CalendarDataManager cdm) {
 		super();
+		username = userName;
 		data = cdm;
 		calOpPanel = new JPanel();
 		todayBut = new JButton("Today");
@@ -204,15 +204,6 @@ public class CalendarPanel {
 				else
 					dateButs[i][j].setVisible(true);
 			}
-		}
-	}
-
-	private class Listener implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			curMMYYYYLab
-					.setText("<html><table width=100><tr><th><font size=5>" + ((data.calMonth + 1) < 10 ? "&nbsp;" : "")
-							+ (data.calMonth + 1) + " / " + data.calYear + "</th></tr></table></html>");
-			showCal();
 		}
 	}
 

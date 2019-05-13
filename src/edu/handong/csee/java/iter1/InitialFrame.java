@@ -11,8 +11,10 @@ public class InitialFrame {
 	private String username;
 	private String password;
 	private Connectivity connection;
-	InitialFrame(Connectivity mainConnection){
+	private CalendarDataManager data;
+	InitialFrame(Connectivity mainConnection, CalendarDataManager cdm){
 		connection = mainConnection;
+		data = cdm;
 	}
 	
 	public void initiateFrame() {
@@ -66,7 +68,7 @@ public class InitialFrame {
 		callSignUp.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new AccountRegistrationFrame(connection);
+				new AccountRegistrationFrame(connection, data);
 				mainFrame.dispose();
 			}
 		});
@@ -95,17 +97,11 @@ public class InitialFrame {
 			//System.out.println("calling new Frame...");
 			if(connection.getElement(username, "super").equals("NO")) {
 				//new AccountInfoFrame(username);
-				SwingUtilities.invokeLater(new Runnable() {
-					public void run() {
-						//TODO
-						//link calendardatamanager
-						//new Scheduler(connection, );
-					}
-				});
+				new Scheduler(username, connection, data);
 				mainFrame.dispose();
 			}
 			else if(connection.getElement(username, "super").equals("YES")) {
-				new SuperAccountInfoFrame(username, connection);
+				new SuperAccountInfoFrame(username, connection, data);
 				mainFrame.dispose();
 			}
 		}

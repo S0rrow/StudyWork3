@@ -15,10 +15,12 @@ public class SuperAccountRegistrationFrame extends JFrame{
 	private boolean usableUsername;
 	private String usernameCache;
 	private Connectivity connection;
-	SuperAccountRegistrationFrame(String superAccount, Connectivity mainConnection){
+	private CalendarDataManager data;
+	SuperAccountRegistrationFrame(String superAccount, Connectivity mainConnection, CalendarDataManager cdm){
 		setTitle("Account Registration");
 		usableUsername = false;
 		connection = mainConnection;
+		data = cdm;
 		connection.Connect();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocation(100,100);
@@ -183,7 +185,7 @@ public class SuperAccountRegistrationFrame extends JFrame{
 						connection.insertAccount(inputUsername.getText(), new String(inputPassword.getPassword()), choiceGender.getSelection().getActionCommand(),emailAddress, inputDepartment.getText(), inputStudentid.getText(), choiceYesNo.getSelection().getActionCommand());
 						JOptionPane.showMessageDialog(null, "Insertion successful!", "Inserted", JOptionPane.PLAIN_MESSAGE);
 						connection.close();
-						new SuperAccountInfoFrame(superAccount, connection);
+						new SuperAccountInfoFrame(superAccount, connection, data);
 						dispose();
 					}
 				}
@@ -194,7 +196,7 @@ public class SuperAccountRegistrationFrame extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				connection.close();
-				new SuperAccountInfoFrame(superAccount, connection);
+				new SuperAccountInfoFrame(superAccount, connection, data);
 				dispose();
 			}
 		});

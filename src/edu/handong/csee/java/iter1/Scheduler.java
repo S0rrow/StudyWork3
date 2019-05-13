@@ -14,9 +14,7 @@ import javax.swing.*;
 
 public class Scheduler {
 	// user data and db connectivity
-	// private String username;
-	// private String password;
-
+	private String username;
 	Connectivity connection;
 	CalendarDataManager data;
 
@@ -49,11 +47,12 @@ public class Scheduler {
 	final String ClrButMsg1 = "Cleared the memo.";
 
 	CalendarPanel cp;
-	Scheduler(Connectivity mainConnection, CalendarDataManager data) {
+	Scheduler(String userName, Connectivity mainConnection, CalendarDataManager cdm) {
 		super();
 		connection = mainConnection;
-		cp = new CalendarPanel(data);
-		this.data = data;
+		username = userName;
+		data = cdm;
+		cp = new CalendarPanel(username, data);
 		start();
 	}
 

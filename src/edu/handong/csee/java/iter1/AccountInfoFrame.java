@@ -10,13 +10,16 @@ import javax.swing.*;
 @SuppressWarnings("serial")
 public class AccountInfoFrame extends JFrame{
 	private Connectivity connection;
+	private CalendarDataManager data;
 
-	AccountInfoFrame(String username, Connectivity mainConnection) {
+	AccountInfoFrame(String username, Connectivity mainConnection, CalendarDataManager cdm) {
 		//System.out.println("Initiated new AccountInfoFrame.");
 		setTitle("Signed In");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocation(100,100);
 		connection = mainConnection;
+		data = cdm;
+		
 		connection.Connect();
 		JPanel mainContainer = new JPanel(new GridLayout(7, 1));
 		mainContainer.setPreferredSize(new Dimension(600, 600));
@@ -68,7 +71,7 @@ public class AccountInfoFrame extends JFrame{
 		edit.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new AccountEditFrame(username, connection);
+				new AccountEditFrame(username, connection, data);
 				dispose();
 			}
 		});
@@ -78,7 +81,7 @@ public class AccountInfoFrame extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				int dialogResult = JOptionPane.showConfirmDialog(null, "Log out?");
 				if(dialogResult==JOptionPane.YES_OPTION) {
-					InitialFrame newMainFrame = new InitialFrame(connection);
+					InitialFrame newMainFrame = new InitialFrame(connection, data);
 					newMainFrame.initiateFrame();
 					dispose();
 				}

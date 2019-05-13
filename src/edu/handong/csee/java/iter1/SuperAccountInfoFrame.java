@@ -14,12 +14,15 @@ import javax.swing.*;
 @SuppressWarnings("serial")
 public class SuperAccountInfoFrame extends JFrame{
 	private Connectivity connection;
-	SuperAccountInfoFrame(String username, Connectivity mainConnection){
+	private CalendarDataManager data;
+	SuperAccountInfoFrame(String username, Connectivity mainConnection, CalendarDataManager cdm){
 		//System.out.println("Initiated new SignInSuperFrame.");
 		setTitle("SIGNED IN");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocation(100,100);
 		connection = mainConnection;
+		data = cdm;
+		
 		connection.Connect();
 		//현재 로그인 된 관리자 계정의 정보를 표시
 		Vector<String> superAccountInfo = connection.getAccountInfo(username);
@@ -29,7 +32,7 @@ public class SuperAccountInfoFrame extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				connection.close();
-				new SuperAccountEditFrame(username, username, connection);
+				new SuperAccountEditFrame(username, username, connection, data);
 				dispose();
 			}
 		});
@@ -43,7 +46,7 @@ public class SuperAccountInfoFrame extends JFrame{
 					connection.stateDataManip("DELETE FROM account_info WHERE username='"+username+"';");
 					//System.out.println("account deleted from database!");
 					connection.close();
-					InitialFrame newMainFrame = new InitialFrame(connection);
+					InitialFrame newMainFrame = new InitialFrame(connection, data);
 					newMainFrame.initiateFrame();
 					dispose();
 				}
@@ -77,7 +80,7 @@ public class SuperAccountInfoFrame extends JFrame{
 				int dialogResult = JOptionPane.showConfirmDialog(null, "Insert new account?");
 				if(dialogResult==JOptionPane.YES_OPTION) {
 					connection.close();
-					new SuperAccountRegistrationFrame(username, connection);
+					new SuperAccountRegistrationFrame(username, connection, data);
 					dispose();
 				}
 			}
@@ -88,7 +91,7 @@ public class SuperAccountInfoFrame extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				int dialogResult = JOptionPane.showConfirmDialog(null, "Log out?");
 				if(dialogResult==JOptionPane.YES_OPTION) {
-					InitialFrame newMainFrame = new InitialFrame(connection);
+					InitialFrame newMainFrame = new InitialFrame(connection, data);
 					newMainFrame.initiateFrame();
 					connection.close();
 					dispose();
@@ -166,7 +169,7 @@ public class SuperAccountInfoFrame extends JFrame{
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					connection.close();
-					new SuperAccountEditFrame(username.getText(), superAccount, connection);
+					new SuperAccountEditFrame(username.getText(), superAccount, connection, data);
 					dispose();
 				}
 			});
@@ -180,7 +183,7 @@ public class SuperAccountInfoFrame extends JFrame{
 						connection.stateDataManip("DELETE FROM account_info WHERE username='"+username.getText()+"';");
 						//System.out.println("account deleted from database!");
 						connection.close();
-						new SuperAccountInfoFrame(superAccount, connection);
+						new SuperAccountInfoFrame(superAccount, connection, data);
 						dispose();
 					}
 				}

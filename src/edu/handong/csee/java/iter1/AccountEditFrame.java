@@ -10,10 +10,12 @@ import javax.swing.*;
 @SuppressWarnings("serial")
 public class AccountEditFrame extends JFrame{
 	private Connectivity connection;
+	private CalendarDataManager data;
 	
-	AccountEditFrame(String username, Connectivity mainConnection) {
+	AccountEditFrame(String username, Connectivity mainConnection, CalendarDataManager cdm) {
 		//System.out.println("Initiated new AccountEditFrame.");
 		connection = mainConnection;
+		data = cdm;
 		connection.Connect();
 		setTitle("Account Edit");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -139,7 +141,7 @@ public class AccountEditFrame extends JFrame{
 						//System.out.println("emailAddress:"+emailAddress);
 						connection.alterAccount(username, alterpassword, choiceGender.getSelection().getActionCommand(), emailAddress, inputDepartment.getText().trim());
 						connection.close();
-						new AccountInfoFrame(username, connection);
+						new AccountInfoFrame(username, connection, data);
 						dispose();
 					}
 				}
@@ -155,7 +157,7 @@ public class AccountEditFrame extends JFrame{
 					connection.stateDataManip("DELETE FROM account_info WHERE username='"+username+"';");
 					//System.out.println("account deleted from database!");
 					connection.close();
-					InitialFrame newMainFrame = new InitialFrame(connection);
+					InitialFrame newMainFrame = new InitialFrame(connection, data);
 					newMainFrame.initiateFrame();
 					dispose();
 				}
@@ -166,7 +168,7 @@ public class AccountEditFrame extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				connection.close();
-				new AccountInfoFrame(username, connection);
+				new AccountInfoFrame(username, connection, data);
 				dispose();
 			}
 		});
