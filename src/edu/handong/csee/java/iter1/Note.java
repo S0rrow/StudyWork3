@@ -1,7 +1,5 @@
 package edu.handong.csee.java.iter1;
 
-import javax.swing.JFrame;
-
 public interface Note {
 	
 	abstract public String load(String filepath);

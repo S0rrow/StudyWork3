@@ -24,7 +24,7 @@ public class NoteEdit extends JFrame implements Note{
 	@Override
 	public void callback() {
 		// TODO Auto-generated method stub
-		new MemoCalendar();
+		//new MemoCalendar();
 		this.dispose();
 	}
 	

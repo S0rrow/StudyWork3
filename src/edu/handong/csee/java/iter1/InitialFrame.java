@@ -97,7 +97,9 @@ public class InitialFrame {
 				//new AccountInfoFrame(username);
 				SwingUtilities.invokeLater(new Runnable() {
 					public void run() {
-						new MemoCalendar();
+						//TODO
+						//link calendardatamanager
+						//new Scheduler(connection, );
 					}
 				});
 				mainFrame.dispose();
