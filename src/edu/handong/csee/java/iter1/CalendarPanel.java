@@ -321,12 +321,12 @@ public class CalendarPanel {
 	private class UserListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			if(e.getSource() == userInfo) {
-				System.out.println("calling account info...");
+				//System.out.println("calling account info...");
 				new AccountInfoFrame(username, connection, data);
 				mainFrame.dispose();
 			}
 			else if(e.getSource() == logout) {
-				System.out.println("logging out...");
+				//System.out.println("logging out...");
 				InitialFrame newMainFrame = new InitialFrame(connection, data);
 				newMainFrame.initiateFrame();
 				mainFrame.dispose();
