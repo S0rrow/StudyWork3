@@ -10,16 +10,13 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import javax.swing.*;
 
-public class CalendarPanel { 
+public abstract class CalendarPanel { 
 	private String username;
 	Connectivity connection;
 	CalendarDataManager data;
@@ -203,8 +200,8 @@ public class CalendarPanel {
 					fontColor = "red";
 				else if (j == 6)
 					fontColor = "blue";
-
-				File f = new File("MemoData/" + data.calYear + ((data.calMonth + 1) < 10 ? "0" : "")
+				data.setFile();
+				File f = new File("ListData/" + data.calYear + ((data.calMonth + 1) < 10 ? "0" : "")
 						+ (data.calMonth + 1) + (data.calDates[i][j] < 10 ? "0" : "") + data.calDates[i][j] + ".txt");
 				if (f.exists()) {
 					dateButs[i][j].setFont(
@@ -233,54 +230,7 @@ public class CalendarPanel {
 		}
 	}
 	
-	public void readSchedule() {
-		try {
-            File f = new File(("ListData/" + data.calYear + ((data.calMonth + 1) < 10 ? "0" : "") + (data.calMonth + 1)
-                    + (data.calDayOfMon < 10 ? "0" : "") + data.calDayOfMon + ".txt"));
-
-            	
-        //    if (memo.length() > 0) {
-            
-            Scheduler.model.setNumRows(0);
-               //MemoCalendar.List = new JTable(new DefaultTableModel(MemoCalendar.rowData,MemoCalendar.columnNames));
-               if(f.exists()) {
-               	BufferedReader in = new BufferedReader(
-               			new FileReader("ListData/" + data.calYear + ((data.calMonth + 1) < 10 ? "0" : "") + (data.calMonth + 1)
-                                   + (data.calDayOfMon < 10 ? "0" : "") + data.calDayOfMon + ".txt"));
-               	String ListName1 = new String();
-               	
-               	while(true) {
-               		String tempStr = in.readLine();
-               		if(tempStr ==null)
-               			break;
-               		
-               		ListName1 =ListName1+ tempStr + System.getProperty("line.separator");
-               	}
-                in.close();
-           		//DefaultTableModel model = (DefaultTableModel) MemoCalendar.model;
-           		String arr[] = new String[1];
-           		arr[0]=ListName1;
-           		Scheduler.model.addRow(arr);
-           		//MemoCalendar.rowData[0][0] = ListName1;
-           		//MemoCalendar.model = new DefaultTableModel(MemoCalendar.rowData,MemoCalendar.columnNames);
-           	   }
-               else {
-            	   
-            	   int rows = Scheduler.model.getRowCount();
-            	   for(int i=0;i<rows;i++)
-            	   Scheduler.model.removeRow(i);
-            	   //model.setNumRows(0);
-            	   
-            	   }
-              // bottomInfo.setText(calYear + ((calMonth + 1) < 10 ? "0" : "") + (calMonth + 1)
-                   //  + (calDayOfMon < 10 ? "0" : "") + calDayOfMon + ".txt" + SaveButMsg1);
-           // } //else {}
-              // bottomInfo.setText(SaveButMsg2);
-         } catch (IOException e) {
-            //bottomInfo.setText("Fail");
-         }
-         
-      }
+	abstract public void readSchedule();
 
 /*
 	private void readMemo() {
