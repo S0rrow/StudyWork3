@@ -30,6 +30,7 @@ public class Scheduler {
 	// JButton saveBut;
 	JButton delBut;
 	// JButton clearBut;
+	JButton modBut;
 
 	JPanel frameBottomPanel;
 	JLabel bottomInfo = new JLabel("Welcome to Memo Calendar!");
@@ -120,6 +121,16 @@ public class Scheduler {
 				bottomInfo.setText(addMsg);
 			}
 		});
+		modBut = new JButton("Modify");
+		modBut.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new Meeting();
+				bottomInfo.setText("modify");
+			}
+		});
+		
+		
+		
 
 		ListPanel.setLayout(new BorderLayout());
 		ListPanel.add(selectedDate, BorderLayout.NORTH);
@@ -131,6 +142,7 @@ public class Scheduler {
 		// memoSubPanel.add(saveBut);
 		memoSubPanel.add(delBut);
 		// memoSubPanel.add(clearBut);
+		memoSubPanel.add(modBut);
 
 		// arrange infoPanel, memoPanel at frameSubPanelEast에 배치
 		JPanel frameSubPanelEast = new JPanel();

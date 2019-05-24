@@ -38,7 +38,7 @@ public abstract class CalendarPanel {
 	UserListener ul = new UserListener();
 	ListenForCalOpButtons lForCalOpButtons = new ListenForCalOpButtons();
 	listenForDateButs lForDateButs = new listenForDateButs();
-
+	
 	public JPanel frameSubPanelWest;
 	
 	JFrame mainFrame;

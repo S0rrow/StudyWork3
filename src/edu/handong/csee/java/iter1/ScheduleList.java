@@ -54,6 +54,8 @@ public class ScheduleList extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				try {
+					
+					
 					File f = new File("ListData");
 					if (!f.isDirectory())
 						f.mkdir();
@@ -82,27 +84,14 @@ public class ScheduleList extends JFrame {
 						}
 
 						in.close();
-						// DefaultTableModel model = (DefaultTableModel) MemoCalendar.model;
-						// String arr[] = new String[1];
-						// arr[0]=ListName1;
-						// Scheduler.model.addRow(arr);
-						// MemoCalendar.rowData[0][0] = ListName1;
-						// MemoCalendar.model = new
-						// DefaultTableModel(MemoCalendar.rowData,MemoCalendar.columnNames);
 
 					} else {
 						System.out.println("no file");
 					}
-					// setVisible(false);
 					cp.readSchedule();
 					dispose();
-					// bottomInfo.setText(calYear + ((calMonth + 1) < 10 ? "0" : "") + (calMonth +
-					// 1)
-					// + (calDayOfMon < 10 ? "0" : "") + calDayOfMon + ".txt" + SaveButMsg1);
-					// } //else {}
-					// bottomInfo.setText(SaveButMsg2);
 				} catch (IOException e) {
-					// bottomInfo.setText(SaveButMsg3);
+					System.out.println("error");
 				}
 
 			}
