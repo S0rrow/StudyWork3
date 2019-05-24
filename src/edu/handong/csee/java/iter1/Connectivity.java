@@ -7,7 +7,7 @@ public class Connectivity {
 	static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
 	static final String DB_URL = "jdbc:mysql://localhost:3306/testdb?characterEncoding=UTF-8&serverTimezone=UTC";//&serverTimezone=UTC
 	static final String USER = "root";
-	static final String PASS = "-legion98";
+	static final String PASS = "password";
 	public Connection connect;
 	public Statement statement;
 	public PreparedStatement preparedStatement;
@@ -20,7 +20,7 @@ public class Connectivity {
 		resultSet = null;
 	}
 	
-	// jdbc 드라이버로 db에 연결하기 위한 함수.
+	// jdbc �뱶�씪�씠踰꾨줈 db�뿉 �뿰寃고븯湲� �쐞�븳 �븿�닔.
 	public void Connect() {
 		try {
 			Class.forName(JDBC_DRIVER);
@@ -33,7 +33,7 @@ public class Connectivity {
 			e.printStackTrace();
 		}
 	}
-	//퀴리를 주면 실행하기 위한 함수.
+	//�대━瑜� 二쇰㈃ �떎�뻾�븯湲� �쐞�븳 �븿�닔.
 	public void state(String query) {
 		try {
 			//System.out.println("creating statement...");
@@ -48,8 +48,8 @@ public class Connectivity {
 			e.printStackTrace();
 		}
 	}
-	//쿼리를 주면 preparedStatement로 실행하기 위한 함수.
-	//해당 preparedStatement에 대한 executeUpdate 이후 resultSet의 값을 executeQuery를 통해 받아와야 함.
+	//荑쇰━瑜� 二쇰㈃ preparedStatement濡� �떎�뻾�븯湲� �쐞�븳 �븿�닔.
+	//�빐�떦 preparedStatement�뿉 ���븳 executeUpdate �씠�썑 resultSet�쓽 媛믪쓣 executeQuery瑜� �넻�빐 諛쏆븘���빞 �븿.
 	public void prepareState(String query) {
 		try {
 			preparedStatement = connect.prepareStatement(query);
@@ -59,7 +59,7 @@ public class Connectivity {
 		}
 	}
 	
-	//데이터 관리를 위한 쿼리를 받아 실행하기 위한 함수
+	//�뜲�씠�꽣 愿�由щ�� �쐞�븳 荑쇰━瑜� 諛쏆븘 �떎�뻾�븯湲� �쐞�븳 �븿�닔
 	public void stateDataManip(String query) {
 		try {
 			//System.out.println("creating statement...");
@@ -74,7 +74,7 @@ public class Connectivity {
 		}
 	}
 	
-	//연결, resultSet, 쿼리문들을 모두 close하기 위한 함수.
+	//�뿰寃�, resultSet, 荑쇰━臾몃뱾�쓣 紐⑤몢 close�븯湲� �쐞�븳 �븿�닔.
 	public void close() {
 		//System.out.println("closing...");
 		try {
@@ -149,7 +149,7 @@ public class Connectivity {
 			System.out.println("unable to insert new account due to "+e.getMessage());
 		}
 	}
-	//이미 존재하는 계정의 정보를 수정하기 위한 메서드
+	//�씠誘� 議댁옱�븯�뒗 怨꾩젙�쓽 �젙蹂대�� �닔�젙�븯湲� �쐞�븳 硫붿꽌�뱶
 	public void alterAccount(String username, String password, String gender, String email, String department) {
 		try {
 			preparedStatement = connect.prepareStatement("UPDATE account_info SET password = ?, gender = ?, email = ?, department = ? WHERE username = ?");

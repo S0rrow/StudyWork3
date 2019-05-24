@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Calendar;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -32,7 +33,7 @@ public class ScheduleList extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	ScheduleList(CalendarPanel cp, CalendarDataManager cdm) {
+	ScheduleList(CalendarPanel cp, CalendarDataManager cdm, String username) {
 		setTitle("LIST 추가");
 
 		// 주의, 여기서 setDefaultCloseOperation() 정의를 하지 말아야 한다
@@ -54,9 +55,14 @@ public class ScheduleList extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					File f = new File("ListData");
+					Calendar cal = Calendar.getInstance();
+					int year = cal.get ( Calendar.YEAR );
+					int month = cal.get ( Calendar.MONTH ) + 1 ;
+					int date = cal.get ( Calendar.DATE ) ;
+					String today = "" + year + ((month + 1) < 10 ? "0" : "") + month + date;
+					File f = new File("ListData/" + username + "/" + today + "/" + textField.getText());
 					if (!f.isDirectory())
-						f.mkdir();
+						f.mkdirs();
 					// if (memo.length() > 0) {
 					data.setFile();
 					BufferedWriter out = new BufferedWriter(new FileWriter(data.fileName));

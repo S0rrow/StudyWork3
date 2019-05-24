@@ -17,6 +17,10 @@ public class InitialFrame {
 		data = cdm;
 	}
 	
+	public String getUsername() {
+		return username;
+	}
+	
 	public void initiateFrame() {
 		//새로운 프레임 생성.
 		JFrame mainFrame = new JFrame("Login");

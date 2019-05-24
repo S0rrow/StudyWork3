@@ -11,6 +11,7 @@ import javax.swing.table.DefaultTableModel;
 public class Scheduler {
 	// user data and db connectivity
 	private String username;
+
 	Connectivity connection;
 	CalendarDataManager data;
 
@@ -116,7 +117,7 @@ public class Scheduler {
 		addBut = new JButton("Add");
 		addBut.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new ScheduleList(cp, data);
+				new ScheduleList(cp, data, username);
 				bottomInfo.setText(addMsg);
 			}
 		});
