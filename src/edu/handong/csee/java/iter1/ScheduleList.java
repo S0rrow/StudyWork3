@@ -56,25 +56,25 @@ public class ScheduleList extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					cdm.meetingName = textField.getText();
-					File f = new File("ListData/" + username + "/" + cdm.calYear + ((cdm.calMonth + 1) < 10 ? "0" : "") + (cdm.calMonth + 1)
+					File f = new File("ListData/" + InitialFrame.getUsername() + "/" + cdm.calYear + ((cdm.calMonth + 1) < 10 ? "0" : "") + (cdm.calMonth + 1)
 						       + (cdm.calDayOfMon < 10 ? "0" : "") +cdm.calDayOfMon);
 					if (!f.isDirectory())
 						f.mkdirs();
 					// if (memo.length() > 0) {
-					//data.setFile();
-					String ListName = "ListData/" + username + "/" + cdm.calYear + ((cdm.calMonth + 1) < 10 ? "0" : "") + (cdm.calMonth + 1)
-						       + (cdm.calDayOfMon < 10 ? "0" : "") + cdm.calDayOfMon+"/"+textField.getText();
-					BufferedWriter out = new BufferedWriter(new FileWriter(ListName));
+					data.setFile();
+					BufferedWriter out = new BufferedWriter(new FileWriter(data.fileName));
+					String ListName = textField.getText();
 					out.write(ListName);
 					out.close();
 
 					System.out.println("ok");
 
-					//data.setFile();
-					File r = new File(ListName);
+					data.setFile();
+					File r = new File(data.fileName);
 					if (r.exists()) {
-						BufferedReader in = new BufferedReader(new FileReader(ListName));
+						BufferedReader in = new BufferedReader(new FileReader(data.fileName));
 						String ListName1 = new String();
+
 						while (true) {
 							String tempStr = in.readLine();
 							if (tempStr == null)
@@ -85,7 +85,7 @@ public class ScheduleList extends JFrame {
 						}
 
 						in.close();
-						//DefaultTableModel model = (DefaultTableModel) MemoCalendar.model;
+						// DefaultTableModel model = (DefaultTableModel) MemoCalendar.model;
 						// String arr[] = new String[1];
 						// arr[0]=ListName1;
 						// Scheduler.model.addRow(arr);

@@ -36,7 +36,7 @@ public class CalendarPanelAddition extends CalendarPanel {
 					  //  System.out.println("Path="+tempPath);
 					    //System.out.println("FileName="+tempFileName);
 					    String arr[]= new String[1];
-					    arr[0]=tempFileName;
+					    arr[0]=tempFileName.substring(0,tempFileName.length()-4);
 					    Scheduler.model.addRow(arr);
 					    
 					    /*** Do something withd tempPath and temp FileName ^^; ***/
