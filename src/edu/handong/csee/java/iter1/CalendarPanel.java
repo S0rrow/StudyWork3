@@ -17,7 +17,7 @@ import java.util.GregorianCalendar;
 import javax.swing.*;
 
 public abstract class CalendarPanel { 
-	private String username;
+	public String username;
 	Connectivity connection;
 	CalendarDataManager data;
 

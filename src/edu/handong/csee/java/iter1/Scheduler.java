@@ -11,7 +11,6 @@ import javax.swing.table.DefaultTableModel;
 public class Scheduler {
 	// user data and db connectivity
 	private String username;
-
 	Connectivity connection;
 	CalendarDataManager data;
 

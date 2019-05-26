@@ -14,16 +14,18 @@ class CalendarDataManager { // class to get 6*7arrays to contain calendar result
    int calLastDate;
    Calendar today = Calendar.getInstance();
    Calendar cal;
-   
    public String fileName;
-
+   
+   public String meetingName;
+   public String writeday;
+   
    public CalendarDataManager() {
       setToday();
    }
 
    public void setFile() {
-	   fileName = "ListData/" + calYear + ((calMonth + 1) < 10 ? "0" : "") + (calMonth + 1)
-       + (calDayOfMon < 10 ? "0" : "") +calDayOfMon + ".txt";
+	   fileName = "ListData/" + InitialFrame.getUsername() + "/" +  calYear + ((calMonth + 1) < 10 ? "0" : "") + (calMonth + 1)
+		       + (calDayOfMon < 10 ? "0" : "") +calDayOfMon + "/" + meetingName + ".txt";
    }
    public void setToday() {
       calYear = today.get(Calendar.YEAR);

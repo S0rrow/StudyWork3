@@ -55,29 +55,26 @@ public class ScheduleList extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					Calendar cal = Calendar.getInstance();
-					int year = cal.get ( Calendar.YEAR );
-					int month = cal.get ( Calendar.MONTH ) + 1 ;
-					int date = cal.get ( Calendar.DATE ) ;
-					String today = "" + year + ((month + 1) < 10 ? "0" : "") + month + date;
-					File f = new File("ListData/" + username + "/" + today + "/" + textField.getText());
+					cdm.meetingName = textField.getText();
+					File f = new File("ListData/" + username + "/" + cdm.calYear + ((cdm.calMonth + 1) < 10 ? "0" : "") + (cdm.calMonth + 1)
+						       + (cdm.calDayOfMon < 10 ? "0" : "") +cdm.calDayOfMon);
 					if (!f.isDirectory())
 						f.mkdirs();
 					// if (memo.length() > 0) {
-					data.setFile();
-					BufferedWriter out = new BufferedWriter(new FileWriter(data.fileName));
-					String ListName = textField.getText();
+					//data.setFile();
+					String ListName = "ListData/" + username + "/" + cdm.calYear + ((cdm.calMonth + 1) < 10 ? "0" : "") + (cdm.calMonth + 1)
+						       + (cdm.calDayOfMon < 10 ? "0" : "") + cdm.calDayOfMon+"/"+textField.getText();
+					BufferedWriter out = new BufferedWriter(new FileWriter(ListName));
 					out.write(ListName);
 					out.close();
 
 					System.out.println("ok");
 
-					data.setFile();
-					File r = new File(data.fileName);
+					//data.setFile();
+					File r = new File(ListName);
 					if (r.exists()) {
-						BufferedReader in = new BufferedReader(new FileReader(data.fileName));
+						BufferedReader in = new BufferedReader(new FileReader(ListName));
 						String ListName1 = new String();
-
 						while (true) {
 							String tempStr = in.readLine();
 							if (tempStr == null)
@@ -88,7 +85,7 @@ public class ScheduleList extends JFrame {
 						}
 
 						in.close();
-						// DefaultTableModel model = (DefaultTableModel) MemoCalendar.model;
+						//DefaultTableModel model = (DefaultTableModel) MemoCalendar.model;
 						// String arr[] = new String[1];
 						// arr[0]=ListName1;
 						// Scheduler.model.addRow(arr);
