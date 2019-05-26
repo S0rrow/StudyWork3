@@ -172,10 +172,11 @@ public class Scheduler {
 			if (e.getSource() == delBut) {
 				int n =List.getSelectedRow();
 				if(n>=0&&n<List.getRowCount()) {
-					D_file=PATH+"/"+model.getValueAt(n, 0).toString();
-					model.removeRow(n);
+					D_file=PATH+"/"+model.getValueAt(n, 0).toString()+".txt";
+					System.out.println(D_file);
 					File f = new File(D_file);
 					if (f.exists()) {
+						model.removeRow(n);
 						f.delete();
 						data.setFile();
 						cp.readSchedule();
