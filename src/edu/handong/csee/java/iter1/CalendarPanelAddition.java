@@ -19,8 +19,7 @@ public class CalendarPanelAddition extends CalendarPanel {
 			
 			data.setFile();
 			
-			String Path ="ListData/" + username + "/" + data.calYear + ((data.calMonth + 1) < 10 ? "0" : "") + (data.calMonth + 1)
-				       + (data.calDayOfMon < 10 ? "0" : "") +data.calDayOfMon;
+			String Path ="ListData/" + username + "/" + data.curDate;
 			File f = new File(Path);
 			//System.out.println(Path);
 			Scheduler.model.setNumRows(0);

@@ -21,6 +21,10 @@ public class ScheduleList extends JFrame {
 
 	private JTextField textField;
 	CalendarDataManager data;
+	CalendarPanel cp;
+	String username;
+
+	JButton add = new JButton("추가");
 
 	/*
 	 * public static void main(String[] args) { EventQueue.invokeLater(new
@@ -33,12 +37,14 @@ public class ScheduleList extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	ScheduleList(CalendarPanel cp, CalendarDataManager cdm, String username) {
+	ScheduleList(CalendarPanel CP, CalendarDataManager cdm, String userName) {
 		setTitle("LIST 추가");
 
 		// 주의, 여기서 setDefaultCloseOperation() 정의를 하지 말아야 한다
 		// 정의하게 되면 새 창을 닫으면 모든 창과 프로그램이 동시에 꺼진다
 		data = cdm;
+		username = userName;
+		cp = CP;
 		JPanel NewWindowContainer = new JPanel();
 		setContentPane(NewWindowContainer);
 		JButton add = new JButton("추가");
@@ -50,67 +56,7 @@ public class ScheduleList extends JFrame {
 		panel.add(textField);
 		textField.setColumns(35);
 
-		add.addActionListener(new ActionListener() {
-			// 만들어진 버튼 "새 창 띄우기"에 버튼이 눌러지면 발생하는 행동을 정의
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				try {
-					cdm.meetingName = textField.getText();
-					File f = new File("ListData/" + username + "/" + cdm.calYear + ((cdm.calMonth + 1) < 10 ? "0" : "") + (cdm.calMonth + 1)
-						       + (cdm.calDayOfMon < 10 ? "0" : "") +cdm.calDayOfMon);
-					if (!f.isDirectory())
-						f.mkdirs();
-					// if (memo.length() > 0) {
-					//data.setFile();
-					String ListName = "ListData/" + username + "/" + cdm.calYear + ((cdm.calMonth + 1) < 10 ? "0" : "") + (cdm.calMonth + 1)
-						       + (cdm.calDayOfMon < 10 ? "0" : "") + cdm.calDayOfMon+"/"+textField.getText();
-					BufferedWriter out = new BufferedWriter(new FileWriter(ListName));
-					out.write(ListName);
-					out.close();
-
-					System.out.println("ok");
-
-					//data.setFile();
-					File r = new File(ListName);
-					if (r.exists()) {
-						BufferedReader in = new BufferedReader(new FileReader(ListName));
-						String ListName1 = new String();
-						while (true) {
-							String tempStr = in.readLine();
-							if (tempStr == null)
-								break;
-
-							ListName1 = ListName1 + tempStr + System.getProperty("line.separator");
-
-						}
-
-						in.close();
-						//DefaultTableModel model = (DefaultTableModel) MemoCalendar.model;
-						// String arr[] = new String[1];
-						// arr[0]=ListName1;
-						// Scheduler.model.addRow(arr);
-						// MemoCalendar.rowData[0][0] = ListName1;
-						// MemoCalendar.model = new
-						// DefaultTableModel(MemoCalendar.rowData,MemoCalendar.columnNames);
-
-					} else {
-						System.out.println("no file");
-					}
-					// setVisible(false);
-					cp.readSchedule();
-					dispose();
-					// bottomInfo.setText(calYear + ((calMonth + 1) < 10 ? "0" : "") + (calMonth +
-					// 1)
-					// + (calDayOfMon < 10 ? "0" : "") + calDayOfMon + ".txt" + SaveButMsg1);
-					// } //else {}
-					// bottomInfo.setText(SaveButMsg2);
-				} catch (IOException e) {
-					// bottomInfo.setText(SaveButMsg3);
-				}
-
-			}
-
-		});
+		add.addActionListener(new FileButListener());
 		cancel.addActionListener(new ActionListener() {
 			// 만들어진 버튼 "새 창 띄우기"에 버튼이 눌러지면 발생하는 행동을 정의
 			@Override
@@ -131,6 +77,51 @@ public class ScheduleList extends JFrame {
 		setSize(474, 97);
 		setResizable(false);
 		setVisible(true);
+	}
+
+	private class FileButListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			String ListName = "ListData/" + username + "/" + data.calYear + ((data.calMonth + 1) < 10 ? "0" : "")
+					+ (data.calMonth + 1) + (data.calDayOfMon < 10 ? "0" : "") + data.calDayOfMon + "/"
+					+ textField.getText();
+			if (e.getSource() == add) {
+				try {
+					data.meetingName = textField.getText();
+					data.setFile();
+					File f = new File(
+							"ListData/" + username + "/" + data.curDate);
+					if (!f.isDirectory()) f.mkdirs();
+					
+					BufferedWriter out = new BufferedWriter(new FileWriter(ListName));
+					out.write(ListName);
+					out.close();
+
+					System.out.println("ok");
+
+					// data.setFile();
+					File r = new File(ListName);
+					if (r.exists()) {
+						BufferedReader in = new BufferedReader(new FileReader(ListName));
+						String ListName1 = new String();
+						while (true) {
+							String tempStr = in.readLine();
+							if (tempStr == null)
+								break;
+							ListName1 = ListName1 + tempStr + System.getProperty("line.separator");
+						}
+						in.close();
+					} else {
+						System.out.println("no file");
+					}
+				} catch (IOException ioe) {
+					ioe.printStackTrace();
+				}
+			}
+			cp.readSchedule();
+			dispose();
+
+		}
 	}
 
 }

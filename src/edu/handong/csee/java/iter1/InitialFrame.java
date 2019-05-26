@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 public class InitialFrame {
-	static String username;
+	private String username;
 	private String password;
 	private Connectivity connection;
 	private CalendarDataManager data;
@@ -16,11 +16,6 @@ public class InitialFrame {
 		connection = mainConnection;
 		data = cdm;
 	}
-	
-	public static String getUsername() {
-		return username;
-	}
-
 	
 	public void initiateFrame() {
 		//새로운 프레임 생성.

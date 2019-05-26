@@ -52,7 +52,7 @@ public class Scheduler {
 		}
 	};
 
-	CalendarPanelAddition cp;
+	CalendarPanel cp;
 
 	Scheduler(String userName, Connectivity mainConnection, CalendarDataManager cdm) {
 		super();
@@ -168,7 +168,7 @@ public class Scheduler {
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == delBut) {
 				data.setFile();
-				File f = new File(data.fileName);
+				File f = new File(data.curDate);
 				if (f.exists()) {
 					f.delete();
 					data.setFile();

@@ -14,7 +14,7 @@ class CalendarDataManager { // class to get 6*7arrays to contain calendar result
    int calLastDate;
    Calendar today = Calendar.getInstance();
    Calendar cal;
-   public String fileName;
+   public String curDate;
    
    public String meetingName;
    public String writeday;
@@ -24,8 +24,7 @@ class CalendarDataManager { // class to get 6*7arrays to contain calendar result
    }
 
    public void setFile() {
-	   fileName = "ListData/" + InitialFrame.getUsername() + "/" +  calYear + ((calMonth + 1) < 10 ? "0" : "") + (calMonth + 1)
-		       + (calDayOfMon < 10 ? "0" : "") +calDayOfMon + "/" + meetingName + ".txt";
+	   curDate = calYear + ((calMonth + 1) < 10 ? "0" : "") + (calMonth + 1) + (calDayOfMon < 10 ? "0" : "") +calDayOfMon;
    }
    public void setToday() {
       calYear = today.get(Calendar.YEAR);
