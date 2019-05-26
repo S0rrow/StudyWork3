@@ -93,8 +93,8 @@ public class ScheduleList extends JFrame {
 					out.write("Blank");
 					out.close();
 
-					System.out.println(dirName);
-					System.out.println(listName);
+					//System.out.println(dirName);
+					//System.out.println(listName);
 					// data.setFile();
 					File r = new File(listName);
 					if (r.exists()) {

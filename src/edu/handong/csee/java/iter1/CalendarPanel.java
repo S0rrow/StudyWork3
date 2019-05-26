@@ -3,21 +3,20 @@ package edu.handong.csee.java.iter1;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import javax.swing.*;
 
 public abstract class CalendarPanel { 
-	public String username;
+	public JButton themeBut;
+	String username;
 	Connectivity connection;
 	CalendarDataManager data;
 
@@ -44,7 +43,9 @@ public abstract class CalendarPanel {
 	JFrame mainFrame;
 	JTextArea memoArea;
 	JLabel selectedDate;
-
+	
+	public String curTheme = "default";
+	
 	CalendarPanel(String userName, Connectivity mainConnection, CalendarDataManager cdm, JFrame frame) {
 		super();
 		mainFrame = frame;
@@ -60,6 +61,9 @@ public abstract class CalendarPanel {
 		userInfo = new JButton(username);
 		userInfo.setToolTipText("Open account info");
 		userInfo.addActionListener(ul);
+		
+		themeBut = new JButton(curTheme);
+		themeBut.setToolTipText("change theme between default and inverse");
 		logout = new JButton("log out");
 		logout.setToolTipText("Log out to first frame");
 		logout.addActionListener(ul);
@@ -154,6 +158,13 @@ public abstract class CalendarPanel {
 		calOpGC.gridx = 4;
 		calOpGC.gridy = 1;
 		calOpPanel.add(userInfo, calOpGC);
+		calOpGC.weightx = 1;
+		calOpGC.weighty = 1;
+		calOpGC.fill = GridBagConstraints.NONE;
+		calOpGC.gridwidth = 1;
+		calOpGC.gridx = 3;
+		calOpGC.gridy = 1;
+		calOpPanel.add(themeBut, calOpGC);
 		
 		calOpGC.gridwidth = 1;
 		calOpGC.gridx = 5;
@@ -183,55 +194,11 @@ public abstract class CalendarPanel {
 		calOpPanel.add(nYearBut, calOpGC);
 	}
 
-	public void focusToday() {
-		if (data.today.get(Calendar.DAY_OF_WEEK) == 1)
-			dateButs[data.today.get(Calendar.WEEK_OF_MONTH)][data.today.get(Calendar.DAY_OF_WEEK) - 1]
-					.requestFocusInWindow();
-		else
-			dateButs[data.today.get(Calendar.WEEK_OF_MONTH) - 1][data.today.get(Calendar.DAY_OF_WEEK) - 1]
-					.requestFocusInWindow();
-	}
+	abstract public void focusToday();
 
-	public void showCal() {
-		for (int i = 0; i < CalendarDataManager.CAL_HEIGHT; i++) {
-			for (int j = 0; j < CalendarDataManager.CAL_WIDTH; j++) {
-				String fontColor = "black";
-				if (j == 0)
-					fontColor = "red";
-				else if (j == 6)
-					fontColor = "blue";
-				data.setFile();
-				File f = new File("ListData/" + data.calYear + ((data.calMonth + 1) < 10 ? "0" : "")
-						+ (data.calMonth + 1) + (data.calDates[i][j] < 10 ? "0" : "") + data.calDates[i][j] + ".txt");
-				if (f.exists()) {
-					dateButs[i][j].setFont(
-							dateButs[i][j].getFont().deriveFont(dateButs[i][j].getFont().getStyle() | Font.BOLD));
-					dateButs[i][j].setText(
-							"<html><b><font color=" + fontColor + ">" + data.calDates[i][j] + "</font></b></html>");
-				} else {
-					dateButs[i][j].setFont(
-							dateButs[i][j].getFont().deriveFont(dateButs[i][j].getFont().getStyle() & ~Font.BOLD));
-					dateButs[i][j]
-							.setText("<html><font color=" + fontColor + ">" + data.calDates[i][j] + "</font></html>");
-				}
-				JLabel todayMark = new JLabel("<html><font color=green>*</html>");
-				dateButs[i][j].removeAll();
-				if (data.calMonth == data.today.get(Calendar.MONTH) && data.calYear == data.today.get(Calendar.YEAR)
-						&& data.calDates[i][j] == data.today.get(Calendar.DAY_OF_MONTH)) {
-					dateButs[i][j].add(todayMark);
-					dateButs[i][j].setToolTipText("Today");
-				}
-
-				if (data.calDates[i][j] == 0)
-					dateButs[i][j].setVisible(false);
-				else
-					dateButs[i][j].setVisible(true);
-			}
-		}
-	}
+	abstract public void showCal();
 	
 	abstract public void readSchedule();
-
 
 	private class ListenForCalOpButtons implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
