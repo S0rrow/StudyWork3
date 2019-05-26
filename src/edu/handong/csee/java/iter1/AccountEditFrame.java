@@ -12,7 +12,7 @@ public class AccountEditFrame extends JFrame{
 	private Connectivity connection;
 	private CalendarDataManager data;
 	
-	AccountEditFrame(String username, Connectivity mainConnection, CalendarDataManager cdm) {
+	AccountEditFrame(String username, Connectivity mainConnection, CalendarDataManager cdm, String theme) {
 		//System.out.println("Initiated new AccountEditFrame.");
 		connection = mainConnection;
 		data = cdm;
@@ -141,7 +141,7 @@ public class AccountEditFrame extends JFrame{
 						//System.out.println("emailAddress:"+emailAddress);
 						connection.alterAccount(username, alterpassword, choiceGender.getSelection().getActionCommand(), emailAddress, inputDepartment.getText().trim());
 						connection.close();
-						new AccountInfoFrame(username, connection, data);
+						new AccountInfoFrame(username, connection, data, theme);
 						dispose();
 					}
 				}
@@ -168,7 +168,7 @@ public class AccountEditFrame extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				connection.close();
-				new AccountInfoFrame(username, connection, data);
+				new AccountInfoFrame(username, connection, data, theme);
 				dispose();
 			}
 		});

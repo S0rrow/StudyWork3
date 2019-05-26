@@ -97,11 +97,11 @@ public class InitialFrame {
 			//System.out.println("calling new Frame...");
 			if(connection.getElement(username, "super").equals("NO")) {
 				//new AccountInfoFrame(username);
-				new Scheduler(username, connection, data);
+				new Scheduler(username, connection, data, "default");
 				mainFrame.dispose();
 			}
 			else if(connection.getElement(username, "super").equals("YES")) {
-				new SuperAccountInfoFrame(username, connection, data);
+				new SuperAccountInfoFrame(username, connection, data, "default");
 				mainFrame.dispose();
 			}
 		}

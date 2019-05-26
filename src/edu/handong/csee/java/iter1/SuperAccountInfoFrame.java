@@ -15,8 +15,10 @@ import javax.swing.*;
 public class SuperAccountInfoFrame extends JFrame{
 	private Connectivity connection;
 	private CalendarDataManager data;
-	SuperAccountInfoFrame(String username, Connectivity mainConnection, CalendarDataManager cdm){
+	private String theme;
+	SuperAccountInfoFrame(String username, Connectivity mainConnection, CalendarDataManager cdm, String theme){
 		//System.out.println("Initiated new SignInSuperFrame.");
+		this.theme = theme;
 		setTitle("SIGNED IN");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocation(100,100);
@@ -32,7 +34,7 @@ public class SuperAccountInfoFrame extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				connection.close();
-				new SuperAccountEditFrame(username, username, connection, data);
+				new SuperAccountEditFrame(username, username, connection, data, theme);
 				dispose();
 			}
 		});
@@ -80,7 +82,7 @@ public class SuperAccountInfoFrame extends JFrame{
 				int dialogResult = JOptionPane.showConfirmDialog(null, "Insert new account?");
 				if(dialogResult==JOptionPane.YES_OPTION) {
 					connection.close();
-					new SuperAccountRegistrationFrame(username, connection, data);
+					new SuperAccountRegistrationFrame(username, connection, data, theme);
 					dispose();
 				}
 			}
@@ -169,7 +171,7 @@ public class SuperAccountInfoFrame extends JFrame{
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					connection.close();
-					new SuperAccountEditFrame(username.getText(), superAccount, connection, data);
+					new SuperAccountEditFrame(username.getText(), superAccount, connection, data, theme);
 					dispose();
 				}
 			});
@@ -183,7 +185,7 @@ public class SuperAccountInfoFrame extends JFrame{
 						connection.stateDataManip("DELETE FROM account_info WHERE username='"+username.getText()+"';");
 						//System.out.println("account deleted from database!");
 						connection.close();
-						new SuperAccountInfoFrame(superAccount, connection, data);
+						new SuperAccountInfoFrame(superAccount, connection, data, theme);
 						dispose();
 					}
 				}

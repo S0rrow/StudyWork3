@@ -55,7 +55,7 @@ public class Scheduler {
 
 	CalendarPanelFactory cpf;
 	CalendarPanel cp;
-	Scheduler(String userName, Connectivity mainConnection, CalendarDataManager cdm) {
+	Scheduler(String userName, Connectivity mainConnection, CalendarDataManager cdm, String theme) {
 		super();
 		connection = mainConnection;
 		username = userName;
@@ -63,7 +63,8 @@ public class Scheduler {
 		data = cdm;
 		mainFrame = new JFrame("Scheduler");
 		cpf = new CalendarPanelFactory(username, connection, data, mainFrame);
-		cp = cpf.makePanel("default");
+		cp = cpf.makePanel(theme);
+		//cp = cpf.makePanel("default");
 		start();
 	}
 
@@ -171,6 +172,7 @@ public class Scheduler {
 		frameBottomPanel.add(bottomInfo);
 
 		mainFrame.setLayout(new BorderLayout());
+		//JPanel cardPanel = new JPanel().setLayout(new CardLayout());
 		mainFrame.add(frameSubPanelWest, BorderLayout.WEST);
 		mainFrame.add(frameSubPanelEast, BorderLayout.CENTER);
 		mainFrame.add(frameBottomPanel, BorderLayout.SOUTH);
@@ -212,19 +214,12 @@ public class Scheduler {
 	
 	private class ThemeChanger implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
-			if(cp.curTheme.equals("default")) {
-				cp = cpf.makePanel("inverse");
-				System.out.println("theme changed to inverse, curTheme:"+cp.curTheme);
+			int dialogResult = JOptionPane.showConfirmDialog(null, "Change?");
+			if(dialogResult==JOptionPane.YES_OPTION) {
+				if(cp.curTheme.equals("default")) new Scheduler(username, connection, data, "inverse");
+				else new Scheduler(username, connection, data, "default");
+				mainFrame.dispose();
 			}
-			else {
-				cp = cpf.makePanel("default");
-				System.out.println("theme changed to default, curTheme:"+cp.curTheme);
-			}
-
-			cp.themeBut.setText(cp.curTheme);
-			System.out.println("curTheme:"+cp.curTheme);
-			mainFrame.revalidate();
-			mainFrame.repaint();
 		}
 	}
 }

@@ -6,7 +6,8 @@ public class CalendarPanelDefault extends CalendarPanelInstance {
 
 	public CalendarPanelDefault(String userName, Connectivity mainConnection, CalendarDataManager cdm, JFrame frame) {
 		super(userName, mainConnection, cdm, frame);
-		
+		curTheme = "default";
+		themeBut.setText("inverse");;
 	}
 
 }

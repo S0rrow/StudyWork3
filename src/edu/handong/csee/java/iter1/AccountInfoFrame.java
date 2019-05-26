@@ -12,7 +12,7 @@ public class AccountInfoFrame extends JFrame{
 	private Connectivity connection;
 	private CalendarDataManager data;
 
-	AccountInfoFrame(String username, Connectivity mainConnection, CalendarDataManager cdm) {
+	AccountInfoFrame(String username, Connectivity mainConnection, CalendarDataManager cdm, String theme) {
 		//System.out.println("Initiated new AccountInfoFrame.");
 		setTitle("Signed In");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -71,7 +71,7 @@ public class AccountInfoFrame extends JFrame{
 		edit.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new AccountEditFrame(username, connection, data);
+				new AccountEditFrame(username, connection, data, theme);
 				dispose();
 			}
 		});
@@ -91,7 +91,7 @@ public class AccountInfoFrame extends JFrame{
 		quit.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new Scheduler(username, connection, data);
+				new Scheduler(username, connection, data, theme);
 				dispose();
 			}
 		});

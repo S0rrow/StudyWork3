@@ -62,7 +62,7 @@ public abstract class CalendarPanel {
 		userInfo.setToolTipText("Open account info");
 		userInfo.addActionListener(ul);
 		
-		themeBut = new JButton(curTheme);
+		themeBut = new JButton();
 		themeBut.setToolTipText("change theme between default and inverse");
 		logout = new JButton("log out");
 		logout.setToolTipText("Log out to first frame");
@@ -262,7 +262,7 @@ public abstract class CalendarPanel {
 		public void actionPerformed(ActionEvent e) {
 			if(e.getSource() == userInfo) {
 				//System.out.println("calling account info...");
-				new AccountInfoFrame(username, connection, data);
+				new AccountInfoFrame(username, connection, data, curTheme);
 				mainFrame.dispose();
 			}
 			else if(e.getSource() == logout) {

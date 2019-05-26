@@ -27,7 +27,7 @@ public class CalendarPanelInstance extends CalendarPanel {
 				  if(tempFile.isFile()) {
 				    //String tempPath=tempFile.getParent();
 				    String tempFileName=tempFile.getName();
-				    System.out.println(tempFileName.substring(tempFileName.length()-4, tempFileName.length()));
+				    //System.out.println(tempFileName.substring(tempFileName.length()-4, tempFileName.length()));
 				    if(!tempFileName.substring(tempFileName.length()-4, tempFileName.length()).equals(".txt")) {
 				    	continue;
 				    }
@@ -38,7 +38,6 @@ public class CalendarPanelInstance extends CalendarPanel {
 				    String arr[]= new String[1];
 				    arr[0]=tempFileName.substring(0,tempFileName.length()-4);
 				    Scheduler.model.addRow(arr);
-				  
 				    /*** Do something withd tempPath and temp FileName ^^; ***/
 				  }
 				}
@@ -46,16 +45,18 @@ public class CalendarPanelInstance extends CalendarPanel {
 	}
 	
 	public void showCal() {
+		String fontColor = "black";
 		String path_date;
 		for (int i = 0; i < CalendarDataManager.CAL_HEIGHT; i++) {
 			for (int j = 0; j < CalendarDataManager.CAL_WIDTH; j++) {
-				String fontColor = "black";
+				
 				if (j == 0)
 					fontColor = "red";
 				else if (j == 6)
 					fontColor = "blue";
+				else fontColor = "black";
 				data.setFile();
-				path_date = "ListData/" + username + "/" + data.curDate;
+				path_date = "ListData/" + username + "/" + data.calYear + ((data.calMonth + 1) < 10 ? "0" : "") + (data.calMonth + 1) + (data.calDayOfMon < 10 ? "0" : "")+data.calDates[i][j];
 				File f = new File(path_date);
 				if (f.exists() && f.listFiles().length>0) {
 					dateButs[i][j].setFont(
