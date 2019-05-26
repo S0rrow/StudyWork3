@@ -1,10 +1,6 @@
 package edu.handong.csee.java.iter1;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-
 import javax.swing.JFrame;
 
 public class CalendarPanelAddition extends CalendarPanel {
@@ -35,7 +31,7 @@ public class CalendarPanelAddition extends CalendarPanel {
 					  //  System.out.println("Path="+tempPath);
 					    //System.out.println("FileName="+tempFileName);
 					    String arr[]= new String[1];
-					    arr[0]=tempFileName;
+					    arr[0]=tempFileName.substring(0,tempFileName.length()-4);
 					    Scheduler.model.addRow(arr);
 					    
 					    /*** Do something withd tempPath and temp FileName ^^; ***/

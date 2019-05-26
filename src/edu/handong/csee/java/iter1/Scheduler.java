@@ -166,18 +166,26 @@ public class Scheduler {
 	
 	private class FileButListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
+			String D_file;
+			data.setFile();
+			String PATH = "ListData/" + username +"/"+data.curDate;
 			if (e.getSource() == delBut) {
-				data.setFile();
-				File f = new File(data.curDate);
-				if (f.exists()) {
-					f.delete();
-					data.setFile();
-					cp.readSchedule();
-					cp.showCal();
-					bottomInfo.setText(DelButMsg1);
-				} else
-					bottomInfo.setText(DelButMsg2);
+				int n =List.getSelectedRow();
+				if(n>=0&&n<List.getRowCount()) {
+					D_file=PATH+"/"+model.getValueAt(n, 0).toString();
+					model.removeRow(n);
+					File f = new File(D_file);
+					if (f.exists()) {
+						f.delete();
+						data.setFile();
+						cp.readSchedule();
+						cp.showCal();
+						bottomInfo.setText(DelButMsg1);
+					} else
+						bottomInfo.setText(DelButMsg2);
+				}
 			}
+				
 		}
 	}
 }

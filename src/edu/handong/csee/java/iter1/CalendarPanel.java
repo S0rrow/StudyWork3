@@ -232,30 +232,6 @@ public abstract class CalendarPanel {
 	
 	abstract public void readSchedule();
 
-/*
-	private void readMemo() {
-		try {
-			File f = new File("MemoData/" + data.calYear + ((data.calMonth + 1) < 10 ? "0" : "") + (data.calMonth + 1)
-					+ (data.calDayOfMon < 10 ? "0" : "") + data.calDayOfMon + ".txt");
-			if (f.exists()) {
-				BufferedReader in = new BufferedReader(new FileReader(
-						"MemoData/" + data.calYear + ((data.calMonth + 1) < 10 ? "0" : "") + (data.calMonth + 1)
-								+ (data.calDayOfMon < 10 ? "0" : "") + data.calDayOfMon + ".txt"));
-				String memoAreaText = new String();
-				while (true) {
-					String tempStr = in.readLine();
-					if (tempStr == null)
-						break;
-					memoAreaText = memoAreaText + tempStr + System.getProperty("line.separator");
-				}
-				memoArea.setText(memoAreaText);
-				in.close();
-			} else
-				memoArea.setText("");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}*/
 
 	private class ListenForCalOpButtons implements ActionListener {
 		public void actionPerformed(ActionEvent e) {

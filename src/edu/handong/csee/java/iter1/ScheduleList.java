@@ -9,8 +9,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Calendar;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -23,8 +21,9 @@ public class ScheduleList extends JFrame {
 	CalendarDataManager data;
 	CalendarPanel cp;
 	String username;
-
+	FileButListener f2 = new FileButListener();
 	JButton add = new JButton("추가");
+	JButton cancel = new JButton("취소");
 
 	/*
 	 * public static void main(String[] args) { EventQueue.invokeLater(new
@@ -47,8 +46,7 @@ public class ScheduleList extends JFrame {
 		cp = CP;
 		JPanel NewWindowContainer = new JPanel();
 		setContentPane(NewWindowContainer);
-		JButton add = new JButton("추가");
-		JButton cancel = new JButton("취소");
+		
 		JPanel SubListArea = new JPanel();
 		JPanel panel = new JPanel();
 
@@ -56,7 +54,7 @@ public class ScheduleList extends JFrame {
 		panel.add(textField);
 		textField.setColumns(35);
 
-		add.addActionListener(new FileButListener());
+		add.addActionListener(f2);
 		cancel.addActionListener(new ActionListener() {
 			// 만들어진 버튼 "새 창 띄우기"에 버튼이 눌러지면 발생하는 행동을 정의
 			@Override
@@ -82,28 +80,27 @@ public class ScheduleList extends JFrame {
 	private class FileButListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			String ListName = "ListData/" + username + "/" + data.calYear + ((data.calMonth + 1) < 10 ? "0" : "")
-					+ (data.calMonth + 1) + (data.calDayOfMon < 10 ? "0" : "") + data.calDayOfMon + "/"
-					+ textField.getText();
+			String dirName = "ListData/"+username+"/"+data.curDate;
+			String listName = dirName+"/"+ textField.getText()+".txt";
 			if (e.getSource() == add) {
 				try {
 					data.meetingName = textField.getText();
 					data.setFile();
-					File f = new File(
-							"ListData/" + username + "/" + data.curDate);
+					File f = new File(dirName);
 					if (!f.isDirectory()) f.mkdirs();
 					
-					BufferedWriter out = new BufferedWriter(new FileWriter(ListName));
-					out.write(ListName);
+					BufferedWriter out = new BufferedWriter(new FileWriter(listName));
+					out.write(listName);
 					out.close();
 
-					System.out.println("ok");
-
+					System.out.println(dirName);
+					System.out.println(listName);
 					// data.setFile();
-					File r = new File(ListName);
+					File r = new File(listName);
 					if (r.exists()) {
-						BufferedReader in = new BufferedReader(new FileReader(ListName));
+						BufferedReader in = new BufferedReader(new FileReader(listName));
 						String ListName1 = new String();
+
 						while (true) {
 							String tempStr = in.readLine();
 							if (tempStr == null)
