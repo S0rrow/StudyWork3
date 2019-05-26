@@ -27,13 +27,18 @@ public class CalendarPanelAddition extends CalendarPanel {
 					  if(tempFile.isFile()) {
 					    //String tempPath=tempFile.getParent();
 					    String tempFileName=tempFile.getName();
+					    System.out.println(tempFileName.substring(tempFileName.length()-4, tempFileName.length()));
+					    if(!tempFileName.substring(tempFileName.length()-4, tempFileName.length()).equals(".txt")) {
+					    	continue;
+					    }
+					  
 					   // BufferedReader in = new BufferedReader(new FileReader(tempFile+"/"+tempFileName));
 					  //  System.out.println("Path="+tempPath);
 					    //System.out.println("FileName="+tempFileName);
 					    String arr[]= new String[1];
 					    arr[0]=tempFileName.substring(0,tempFileName.length()-4);
 					    Scheduler.model.addRow(arr);
-					    
+					  
 					    /*** Do something withd tempPath and temp FileName ^^; ***/
 					  }
 					}

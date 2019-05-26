@@ -28,6 +28,7 @@ public class Scheduler {
 	JPanel memoSubPanel;
 	JButton addBut;
 	// JButton saveBut;
+	JButton modBut;
 	JButton delBut;
 	// JButton clearBut;
 
@@ -103,6 +104,7 @@ public class Scheduler {
 		 */
 		memoSubPanel = new JPanel();
 		// saveBut = new JButton("Save");
+		
 		// saveBut.addActionListener(fl);
 		delBut = new JButton("Delete");
 		delBut.addActionListener(fl);
@@ -120,6 +122,22 @@ public class Scheduler {
 				bottomInfo.setText(addMsg);
 			}
 		});
+		modBut = new JButton("Modify");
+		modBut.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String D_file;
+				int n =List.getSelectedRow();
+				if(n==-1) {
+					System.out.println("error");
+					return;
+				}
+				data.setFile();
+				String PATH = "ListData/" + username +"/"+data.curDate;
+				D_file=model.getValueAt(n, 0).toString();
+				new Meeting(PATH, D_file);
+				bottomInfo.setText("modify");
+			}
+		});
 
 		ListPanel.setLayout(new BorderLayout());
 		ListPanel.add(selectedDate, BorderLayout.NORTH);
@@ -129,6 +147,7 @@ public class Scheduler {
 		ListPanel.add(memoSubPanel, BorderLayout.SOUTH);
 		memoSubPanel.add(addBut);
 		// memoSubPanel.add(saveBut);
+		memoSubPanel.add(modBut);
 		memoSubPanel.add(delBut);
 		// memoSubPanel.add(clearBut);
 
