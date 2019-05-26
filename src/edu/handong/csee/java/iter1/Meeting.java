@@ -60,12 +60,9 @@ public class Meeting extends JFrame {
 			BufferedReader in = new BufferedReader(new FileReader(PATH+"/"+filename+".txt"));
 			String text =null;
 			try {
-		
-				while((text=in.readLine())!=null) {
+				while((text=in.readLine())!=null)
+		            txtrContents.append(text+"\n"); 
 				
-					System.out.println(text);
-					txtrContents.setText(text);
-				}
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
