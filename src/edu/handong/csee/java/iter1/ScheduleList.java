@@ -90,7 +90,7 @@ public class ScheduleList extends JFrame {
 					if (!f.isDirectory()) f.mkdirs();
 					
 					BufferedWriter out = new BufferedWriter(new FileWriter(listName));
-					out.write(listName);
+					out.write("Blank");
 					out.close();
 
 					//System.out.println(dirName);
