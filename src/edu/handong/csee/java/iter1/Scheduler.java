@@ -8,6 +8,7 @@ import java.io.File;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
+
 public class Scheduler {
 	// user data and db connectivity
 	private String username;
@@ -55,6 +56,10 @@ public class Scheduler {
 
 	CalendarPanelFactory cpf;
 	CalendarPanel cp;
+	public static Scheduler build(String userName, Connectivity mainConnection, CalendarDataManager cdm, String theme) {
+		return new Scheduler(userName, mainConnection, cdm, theme);
+	}
+	
 	Scheduler(String userName, Connectivity mainConnection, CalendarDataManager cdm, String theme) {
 		super();
 		connection = mainConnection;

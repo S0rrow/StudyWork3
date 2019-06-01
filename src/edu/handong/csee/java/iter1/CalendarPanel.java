@@ -204,7 +204,9 @@ public abstract class CalendarPanel {
 		public void actionPerformed(ActionEvent e) {
 
 			if (e.getSource() == todayBut) {
-				data.setToday();
+				//data.setToday();
+				data.getToday();
+				//origin.restore( ct.getMemento() );
 				lForDateButs.actionPerformed(e);
 				focusToday();
 			} else if (e.getSource() == lYearBut)

@@ -86,11 +86,7 @@ public class CalendarPanelInstance extends CalendarPanel {
 	}
 
 	public void focusToday() {
-		if (data.today.get(Calendar.DAY_OF_WEEK) == 1)
-			dateButs[data.today.get(Calendar.WEEK_OF_MONTH)][data.today.get(Calendar.DAY_OF_WEEK) - 1]
-					.requestFocusInWindow();
-		else
-			dateButs[data.today.get(Calendar.WEEK_OF_MONTH) - 1][data.today.get(Calendar.DAY_OF_WEEK) - 1]
+		dateButs[data.today.get(Calendar.WEEK_OF_MONTH) - 1][data.today.get(Calendar.DAY_OF_WEEK) - 1]
 					.requestFocusInWindow();
 	}
 }

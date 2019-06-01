@@ -12,6 +12,8 @@ public class InitialFrame {
 	private String password;
 	private Connectivity connection;
 	private CalendarDataManager data;
+	MediatorBuilder builder = new MediatorBuilder();
+	Mediator md;
 	InitialFrame(Connectivity mainConnection, CalendarDataManager cdm){
 		connection = mainConnection;
 		data = cdm;
@@ -68,7 +70,9 @@ public class InitialFrame {
 		callSignUp.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new AccountRegistrationFrame(connection, data);
+				md = builder.setConnectivity(connection).setCDM(data).build();
+				//new AccountRegistrationFrame(connection, data);
+				md.registrate();
 				mainFrame.dispose();
 			}
 		});
@@ -97,11 +101,15 @@ public class InitialFrame {
 			//System.out.println("calling new Frame...");
 			if(connection.getElement(username, "super").equals("NO")) {
 				//new AccountInfoFrame(username);
-				new Scheduler(username, connection, data, "default");
+				md = builder.setUsername(username).setConnectivity(connection).setCDM(data).setTheme("default").build();
+				//new Scheduler(username, connection, data, "default");
+				md.signin();
 				mainFrame.dispose();
 			}
 			else if(connection.getElement(username, "super").equals("YES")) {
-				new SuperAccountInfoFrame(username, connection, data, "default");
+				md = builder.setUsername(username).setConnectivity(connection).setCDM(data).setTheme("default").build();
+				//new SuperAccountInfoFrame(username, connection, data, "default");
+				md.superAccount();
 				mainFrame.dispose();
 			}
 		}
