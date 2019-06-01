@@ -28,6 +28,12 @@ public abstract class CalendarPanel {
 	JButton todayBut;
 	JButton userInfo;
 	JButton logout;
+	
+	
+	
+	
+	
+	
 	JLabel todayLab;
 	JButton lYearBut;
 	JButton lMonBut;
@@ -37,6 +43,7 @@ public abstract class CalendarPanel {
 	UserListener ul = new UserListener();
 	ListenForCalOpButtons lForCalOpButtons = new ListenForCalOpButtons();
 	listenForDateButs lForDateButs = new listenForDateButs();
+
 
 	public JPanel frameSubPanelWest;
 	
@@ -65,8 +72,10 @@ public abstract class CalendarPanel {
 		themeBut = new JButton();
 		themeBut.setToolTipText("change theme between default and inverse");
 		logout = new JButton("log out");
+	
 		logout.setToolTipText("Log out to first frame");
 		logout.addActionListener(ul);
+		
 		lYearBut = new JButton("<<");
 		lYearBut.setToolTipText("Previous Year");
 		lYearBut.addActionListener(lForCalOpButtons);

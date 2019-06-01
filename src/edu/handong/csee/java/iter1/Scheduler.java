@@ -8,12 +8,16 @@ import java.io.File;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
+
+
 public class Scheduler {
 	// user data and db connectivity
 	private String username;
 	Connectivity connection;
 	CalendarDataManager data;
-
+	
+	LockCommand lc = new LockCommand(this);
+	UnLockCommand uc = new UnLockCommand(this);
 	// Java frame components
 	JFrame mainFrame;
 	ImageIcon icon = new ImageIcon();
@@ -31,7 +35,9 @@ public class Scheduler {
 	JButton modBut;
 	JButton delBut;
 	// JButton clearBut;
-
+	JButton LockBut;
+	private int state_lock=0;
+	
 	JPanel frameBottomPanel;
 	JLabel bottomInfo = new JLabel("Welcome to Memo Calendar!");
 	FileButListener fl = new FileButListener();
@@ -45,6 +51,7 @@ public class Scheduler {
 	public static JTable List;
 	static Object[][] rowData = new Object[1][1];
 	static Object[] columnNames = new Object[1];
+	
 
 	@SuppressWarnings("serial")
 	static DefaultTableModel model = new DefaultTableModel(rowData, columnNames) {
@@ -66,6 +73,19 @@ public class Scheduler {
 		cp = cpf.makePanel(theme);
 		//cp = cpf.makePanel("default");
 		start();
+	}
+	public void lock() {
+		state_lock=1;
+		LockBut.addActionListener(uc);//command변
+		LockBut.setText("unlock");
+		LockBut.removeActionListener(lc);
+		
+	}
+	public void unlock() {
+		state_lock=0;
+		LockBut.addActionListener(lc);
+		LockBut.setText("lock");
+		LockBut.removeActionListener(uc);
 	}
 
 	public void start() {
@@ -119,6 +139,7 @@ public class Scheduler {
 		addBut = new JButton("Add");
 		addBut.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(state_lock==1)return;
 				new ScheduleList(cp, data, username);
 				bottomInfo.setText(addMsg);
 			}
@@ -126,6 +147,7 @@ public class Scheduler {
 		modBut = new JButton("Modify");
 		modBut.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(state_lock==1)return;
 				String D_file;
 				int n =List.getSelectedRow();
 				if(n==-1) {
@@ -139,6 +161,13 @@ public class Scheduler {
 				bottomInfo.setText("modify");
 			}
 		});
+		LockBut = new JButton();
+		LockBut.setText("Lock");
+		LockBut.addActionListener(lc);
+		
+		
+		
+		
 
 		ListPanel.setLayout(new BorderLayout());
 		ListPanel.add(selectedDate, BorderLayout.NORTH);
@@ -150,6 +179,7 @@ public class Scheduler {
 		// memoSubPanel.add(saveBut);
 		memoSubPanel.add(modBut);
 		memoSubPanel.add(delBut);
+		memoSubPanel.add(LockBut);
 		// memoSubPanel.add(clearBut);
 
 		// arrange infoPanel, memoPanel at frameSubPanelEast에 배치
@@ -186,7 +216,9 @@ public class Scheduler {
 	}
 	
 	private class FileButListener implements ActionListener {
+		
 		public void actionPerformed(ActionEvent e) {
+			if(state_lock==1)return;
 			String D_file;
 			data.setFile();
 			String PATH = "ListData/" + username +"/"+data.curDate;

@@ -7,7 +7,7 @@ public class Main {
 	
 	public static void main(String[] args) throws Exception {
 		Main main = new Main();
-		main.run(main.getConnection());
+		main.test(main.getConnection());
 	}
 
 	public void run(Connectivity mainConnection) {
