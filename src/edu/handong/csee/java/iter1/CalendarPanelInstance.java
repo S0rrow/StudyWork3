@@ -20,28 +20,44 @@ public class CalendarPanelInstance extends CalendarPanel {
 		//System.out.println(Path);
 		Scheduler.model.setNumRows(0);
 		if (f.exists()) {
-			//data.setFile();
-			//BufferedReader in = new BufferedReader(new FileReader(Path));
+			System.out.println("a");
+			
+			FileList filelist= new FileList(f.listFiles());
+			
+			for(File tempfile: filelist.getFileList()) {
+				  if(tempfile.isFile()) {
+					    String tempFileName=tempfile.getName();
+					    if(!tempFileName.substring(tempFileName.length()-4, tempFileName.length()).equals(".txt")) {
+					    	continue;
+					    }
+					    String arr[]= new String[1];
+					    arr[0]=tempFileName.substring(0,tempFileName.length()-4);
+					    Scheduler.model.addRow(arr);
+				  }
+				
+			}
+			/*
 			File []fileList=f.listFiles();
+			
+			
 			for(File tempFile : fileList) {
 				  if(tempFile.isFile()) {
-				    //String tempPath=tempFile.getParent();
 				    String tempFileName=tempFile.getName();
-				    //System.out.println(tempFileName.substring(tempFileName.length()-4, tempFileName.length()));
 				    if(!tempFileName.substring(tempFileName.length()-4, tempFileName.length()).equals(".txt")) {
 				    	continue;
 				    }
-				  
-				   // BufferedReader in = new BufferedReader(new FileReader(tempFile+"/"+tempFileName));
-				  //  System.out.println("Path="+tempPath);
-				    //System.out.println("FileName="+tempFileName);
 				    String arr[]= new String[1];
 				    arr[0]=tempFileName.substring(0,tempFileName.length()-4);
 				    Scheduler.model.addRow(arr);
-				    /*** Do something withd tempPath and temp FileName ^^; ***/
+			
 				  }
+		
 				}
+				*/
+	
+		
 		}
+
 	}
 	
 	public void showCal() {
