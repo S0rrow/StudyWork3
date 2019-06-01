@@ -20,7 +20,6 @@ public class CalendarPanelInstance extends CalendarPanel {
 		//System.out.println(Path);
 		Scheduler.model.setNumRows(0);
 		if (f.exists()) {
-			System.out.println("a");
 			
 			FileList filelist= new FileList(f.listFiles());
 			
