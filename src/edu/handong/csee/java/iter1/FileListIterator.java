@@ -24,7 +24,7 @@ public class FileListIterator implements Iterator{
 	
 
 	@Override
-	public Object next() {
+	public File next() {
 		file = filelist.getFileAt(index);
 		index++;
 		return file;

@@ -77,7 +77,7 @@ public class Scheduler {
 		
 		data = cdm;
 		mainFrame = new JFrame("Scheduler");
-		cpf = new CalendarPanelFactory(username, connection, data, mainFrame, md,ed);
+		cpf = new CalendarPanelFactory(username, connection, data, mainFrame, md, ed);
 		cp = cpf.makePanel(theme);
 		//cp = cpf.makePanel("default");
 		start();

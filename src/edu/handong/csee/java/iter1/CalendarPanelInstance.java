@@ -35,25 +35,6 @@ public class CalendarPanelInstance extends CalendarPanel {
 				  }
 				
 			}
-			/*
-			File []fileList=f.listFiles();
-			
-			
-			for(File tempFile : fileList) {
-				  if(tempFile.isFile()) {
-				    String tempFileName=tempFile.getName();
-				    if(!tempFileName.substring(tempFileName.length()-4, tempFileName.length()).equals(".txt")) {
-				    	continue;
-				    }
-				    String arr[]= new String[1];
-				    arr[0]=tempFileName.substring(0,tempFileName.length()-4);
-				    Scheduler.model.addRow(arr);
-			
-				  }
-		
-				}
-				*/
-	
 		
 		}
 

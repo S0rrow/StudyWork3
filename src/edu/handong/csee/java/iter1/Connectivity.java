@@ -144,7 +144,6 @@ public class Connectivity {
 			System.out.println("unable to insert new account due to "+e.getMessage());
 		}
 	}
-	//�씠誘� 議댁옱�븯�뒗 怨꾩젙�쓽 �젙蹂대�� �닔�젙�븯湲� �쐞�븳 硫붿꽌�뱶
 	public void alterAccount(String username, String password, String gender, String email, String department) {
 		try {
 			preparedStatement = connect.prepareStatement("UPDATE account_info SET password = ?, gender = ?, email = ?, department = ? WHERE username = ?");

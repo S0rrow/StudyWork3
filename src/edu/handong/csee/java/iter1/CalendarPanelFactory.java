@@ -24,7 +24,7 @@ public class CalendarPanelFactory {
 			return new CalendarPanelInverse(username, connection, data, frame,md,ed);
 		}
 		else {
-			return new CalendarPanelDefault(username, connection, data, frame,md,ed);
+			return new CalendarPanelDefault(username, connection, data, frame, md, ed);
 		}
 	}
 }
