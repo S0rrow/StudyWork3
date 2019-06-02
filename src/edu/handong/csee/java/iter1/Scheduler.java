@@ -73,17 +73,11 @@ public class Scheduler {
 		super();
 		connection = mainConnection;
 		username = userName;
-<<<<<<< HEAD
 		ed = new Reactor();
-
+		
 		data = cdm;
 		mainFrame = new JFrame("Scheduler");
-		cpf = new CalendarPanelFactory(username, connection, data, mainFrame, ed);
-=======
-		data = cdm;
-		mainFrame = new JFrame("Scheduler");
-		cpf = new CalendarPanelFactory(username, connection, data, mainFrame, md);
->>>>>>> c7bb816ed74ca17ec4e5eda5ffdc73c339fb3aad
+		cpf = new CalendarPanelFactory(username, connection, data, mainFrame, md,ed);
 		cp = cpf.makePanel(theme);
 		//cp = cpf.makePanel("default");
 		start();

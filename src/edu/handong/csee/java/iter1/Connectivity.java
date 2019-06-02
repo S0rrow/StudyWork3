@@ -70,7 +70,6 @@ public class Connectivity {
 		}
 	}
 	
-	//�뿰寃�, resultSet, 荑쇰━臾몃뱾�쓣 紐⑤몢 close�븯湲� �쐞�븳 �븿�닔.
 	public void close() {
 		//System.out.println("closing...");
 		try {

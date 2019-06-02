@@ -55,11 +55,8 @@ public abstract class CalendarPanel {
 	Mediator md;
 	public String curTheme = "default";
 	
-<<<<<<< HEAD
-	CalendarPanel(String userName, Connectivity mainConnection, CalendarDataManager cdm, JFrame frame, Reactor ed) {
-=======
-	CalendarPanel(String userName, Connectivity mainConnection, CalendarDataManager cdm, JFrame frame, Mediator mainMD) {
->>>>>>> c7bb816ed74ca17ec4e5eda5ffdc73c339fb3aad
+	
+	CalendarPanel(String userName, Connectivity mainConnection, CalendarDataManager cdm, JFrame frame, Mediator mainMD, Reactor ed) {
 		super();
 		this.ed=ed;
 		mainFrame = frame;
