@@ -53,7 +53,8 @@ public class Scheduler {
 	static Object[] columnNames = new Object[1];
 	Reactor ed;
 	
-
+	Mediator md;
+	
 	@SuppressWarnings("serial")
 	static DefaultTableModel model = new DefaultTableModel(rowData, columnNames) {
 		public boolean isCellEditable(int i, int c) {
@@ -63,23 +64,31 @@ public class Scheduler {
 
 	CalendarPanelFactory cpf;
 	CalendarPanel cp;
-	public static Scheduler build(String userName, Connectivity mainConnection, CalendarDataManager cdm, String theme) {
-		return new Scheduler(userName, mainConnection, cdm, theme);
+
+	Scheduler(Mediator mainMD){
+		md = mainMD;
+		new Scheduler(md.username, md.connection, md.data, md.theme);
 	}
-	
 	Scheduler(String userName, Connectivity mainConnection, CalendarDataManager cdm, String theme) {
 		super();
 		connection = mainConnection;
 		username = userName;
+<<<<<<< HEAD
 		ed = new Reactor();
 
 		data = cdm;
 		mainFrame = new JFrame("Scheduler");
 		cpf = new CalendarPanelFactory(username, connection, data, mainFrame, ed);
+=======
+		data = cdm;
+		mainFrame = new JFrame("Scheduler");
+		cpf = new CalendarPanelFactory(username, connection, data, mainFrame, md);
+>>>>>>> c7bb816ed74ca17ec4e5eda5ffdc73c339fb3aad
 		cp = cpf.makePanel(theme);
 		//cp = cpf.makePanel("default");
 		start();
 	}
+	
 	public void lock() {
 		state_lock=1;
 		LockBut.addActionListener(uc);//command변

@@ -14,6 +14,14 @@ public class InitialFrame {
 	private CalendarDataManager data;
 	MediatorBuilder builder = new MediatorBuilder();
 	Mediator md;
+
+	JButton callSignIn;
+	JButton callSignUp;
+	JTextField txtUser;
+	JPasswordField txtPassword;
+	JFrame mainFrame;
+	AccountListener al = new AccountListener();
+	
 	InitialFrame(Connectivity mainConnection, CalendarDataManager cdm){
 		connection = mainConnection;
 		data = cdm;
@@ -21,7 +29,7 @@ public class InitialFrame {
 	
 	public void initiateFrame() {
 		//새로운 프레임 생성.
-		JFrame mainFrame = new JFrame("Login");
+		mainFrame = new JFrame("Login");
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainFrame.setLocation(100,100);
 		mainFrame.setPreferredSize(new Dimension(400,150));
@@ -35,9 +43,9 @@ public class InitialFrame {
 		inputContainer.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		
 		JLabel lblUsername = new JLabel("User ID:");
-		JTextField txtUser = new JTextField();
+		txtUser = new JTextField();
 		JLabel lblPassword = new JLabel("Password:");
-		JPasswordField txtPassword = new JPasswordField();
+		txtPassword = new JPasswordField();
 		txtPassword.setEchoChar('?');
 		
 		inputContainer.add(lblUsername);
@@ -47,35 +55,14 @@ public class InitialFrame {
 		
 		//입력받은 아이디와 비밀번호를 적용할 버튼과 패널.
 		JPanel buttonContainer = new JPanel(new GridLayout(2,1));
-		JButton callSignIn = new JButton("Sign In");
-		JButton callSignUp = new JButton("Sign Up");
+		callSignIn = new JButton("Sign In");
+		callSignUp = new JButton("Sign Up");
+		
 		//액션 리스너 적용
 		callSignIn.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		callSignIn.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				username = txtUser.getText().trim();
-				password = new String(txtPassword.getPassword()).trim();
-				if(username.equals("") || password.equals("")) {
-					JOptionPane.showMessageDialog(null, "given username or password is empty", "ERROR", JOptionPane.ERROR_MESSAGE);
-				}
-				else {
-					//System.out.println("given username:"+username+", given password:"+password);
-					//System.out.println("trySignIn method initiated...");
-					trySignIn(mainFrame);
-				}
-			}
-		});
+		callSignIn.addActionListener(al);
 		callSignUp.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		callSignUp.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				md = builder.setConnectivity(connection).setCDM(data).build();
-				//new AccountRegistrationFrame(connection, data);
-				md.registrate();
-				mainFrame.dispose();
-			}
-		});
+		callSignUp.addActionListener(al);
 		
 		buttonContainer.add(callSignIn);
 		buttonContainer.add(callSignUp);
@@ -90,7 +77,34 @@ public class InitialFrame {
 		mainFrame.setVisible(true);
 	}
 	
-	private void trySignIn(JFrame mainFrame) {
+	private class AccountListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			if(arg0.getSource().equals(callSignIn)) {
+				username = txtUser.getText().trim();
+				password = new String(txtPassword.getPassword()).trim();
+				if(username.equals("") || password.equals("")) {
+					JOptionPane.showMessageDialog(null, "given username or password is empty", "ERROR", JOptionPane.ERROR_MESSAGE);
+				}
+				else {
+					//System.out.println("given username:"+username+", given password:"+password);
+					//System.out.println("trySignIn method initiated...");
+					trySignIn(mainFrame);
+				}
+			}
+			else if(arg0.getSource().equals(callSignUp)) {
+				md = builder.setConnectivity(connection)
+						.setCDM(data)
+						.build();
+				//new AccountRegistrationFrame(connection, data);
+				md.registrate();
+				mainFrame.dispose();
+			}
+		}
+		
+	}
+	
+	void trySignIn(JFrame mainFrame) {
 		connection.Connect();
 		//System.out.println("trySignIn method connected db successfully");
 		String dbquery = "SELECT * from account_info;";
@@ -101,13 +115,21 @@ public class InitialFrame {
 			//System.out.println("calling new Frame...");
 			if(connection.getElement(username, "super").equals("NO")) {
 				//new AccountInfoFrame(username);
-				md = builder.setUsername(username).setConnectivity(connection).setCDM(data).setTheme("default").build();
+				md = builder.setUsername(username)
+						.setConnectivity(connection)
+						.setCDM(data)
+						.setTheme("default")
+						.build();
 				//new Scheduler(username, connection, data, "default");
 				md.signin();
 				mainFrame.dispose();
 			}
 			else if(connection.getElement(username, "super").equals("YES")) {
-				md = builder.setUsername(username).setConnectivity(connection).setCDM(data).setTheme("default").build();
+				md = builder.setUsername(username)
+						.setConnectivity(connection)
+						.setCDM(data)
+						.setTheme("default")
+						.build();
 				//new SuperAccountInfoFrame(username, connection, data, "default");
 				md.superAccount();
 				mainFrame.dispose();
