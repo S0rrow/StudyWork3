@@ -18,13 +18,13 @@ import java.awt.event.ActionEvent;
 
 @SuppressWarnings("serial")
 public class Meeting extends JFrame {
+		Reactor ed;
 	
-
 	/**
 	 * Create the frame.
 	 */
-	public Meeting(String PATH, String filename) {
-		
+	public Meeting(String PATH, String filename, Reactor ed) {
+		this.ed =ed;
 		setTitle("Meeting");
 		
 		JPanel contentPane = new JPanel();
@@ -82,6 +82,7 @@ public class Meeting extends JFrame {
 				try {
 					BufferedWriter out = new BufferedWriter(new FileWriter(PATH+"/"+filename+".txt"));
 					out.write(txtrContents.getText());
+					ed.bottomInfo.setText("Save Schedule " + filename);
 					out.close();
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block

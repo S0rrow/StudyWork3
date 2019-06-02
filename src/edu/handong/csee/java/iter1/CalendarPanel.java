@@ -44,6 +44,7 @@ public abstract class CalendarPanel {
 	UserListener ul = new UserListener();
 	ListenForCalOpButtons lForCalOpButtons = new ListenForCalOpButtons();
 	listenForDateButs lForDateButs = new listenForDateButs();
+	Reactor ed;
 
 
 	public JPanel frameSubPanelWest;
@@ -54,8 +55,13 @@ public abstract class CalendarPanel {
 	Mediator md;
 	public String curTheme = "default";
 	
+<<<<<<< HEAD
+	CalendarPanel(String userName, Connectivity mainConnection, CalendarDataManager cdm, JFrame frame, Reactor ed) {
+=======
 	CalendarPanel(String userName, Connectivity mainConnection, CalendarDataManager cdm, JFrame frame, Mediator mainMD) {
+>>>>>>> c7bb816ed74ca17ec4e5eda5ffdc73c339fb3aad
 		super();
+		this.ed=ed;
 		mainFrame = frame;
 		username = userName;
 		connection = mainConnection;
@@ -213,7 +219,7 @@ public abstract class CalendarPanel {
 
 	private class ListenForCalOpButtons implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-
+			
 			if (e.getSource() == todayBut) {
 				data.setToday();
 				lForDateButs.actionPerformed(e);
@@ -230,12 +236,14 @@ public abstract class CalendarPanel {
 			curMMYYYYLab
 					.setText("<html><table width=100><tr><th><font size=5>" + ((data.calMonth + 1) < 10 ? "&nbsp;" : "")
 							+ (data.calMonth + 1) + " / " + data.calYear + "</th></tr></table></html>");
+			ed.bottomInfo.setText("You change Calendar");
 			showCal();
 		}
 	}
 
 	private class listenForDateButs implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
+			
 			int k = 0, l = 0;
 			for (int i = 0; i < CalendarDataManager.CAL_HEIGHT; i++) {
 				for (int j = 0; j < CalendarDataManager.CAL_WIDTH; j++) {
@@ -264,7 +272,7 @@ public abstract class CalendarPanel {
 
 			selectedDate.setText("<Html><font size=3>" + (data.calMonth + 1) + "/" + data.calDayOfMon + "/"
 					+ data.calYear + "&nbsp;(" + dDayString + ")</html>");
-
+			ed.bottomInfo.setText("Select" + dDayString);
 			readSchedule();
 		}
 	}

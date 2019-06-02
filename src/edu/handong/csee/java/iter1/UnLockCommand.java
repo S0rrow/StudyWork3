@@ -11,7 +11,7 @@ public class UnLockCommand implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Sc.unlock();	
-		Sc.bottomInfo.setText("UNLOCK");
+		Sc.ed.bottomInfo.setText("UNLOCK");
 	}
 	
 }

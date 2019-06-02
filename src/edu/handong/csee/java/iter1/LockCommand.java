@@ -12,7 +12,7 @@ public class LockCommand implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Sc.lock();
-		Sc.bottomInfo.setText("LOCK");
+		Sc.ed.bottomInfo.setText("LOCK");
 		
 		
 	}
