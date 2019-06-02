@@ -11,7 +11,7 @@ import javax.swing.*;
 public class AccountInfoFrame extends JFrame{
 	private Connectivity connection;
 	private CalendarDataManager data;
-
+	
 	AccountInfoFrame(String username, Connectivity mainConnection, CalendarDataManager cdm, String theme) {
 		//System.out.println("Initiated new AccountInfoFrame.");
 		setTitle("Signed In");

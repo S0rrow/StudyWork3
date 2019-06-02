@@ -23,4 +23,8 @@ public class Mediator {
 	public void superAccount() {
 		new SuperAccountInfoFrame(username, connection, data, "default");
 	}
+	
+	public void initFrame() {
+		new InitialFrame(connection, data);
+	}
 }

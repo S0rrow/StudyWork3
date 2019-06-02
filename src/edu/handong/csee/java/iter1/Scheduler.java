@@ -52,7 +52,8 @@ public class Scheduler {
 	static Object[][] rowData = new Object[1][1];
 	static Object[] columnNames = new Object[1];
 	
-
+	Mediator md;
+	
 	@SuppressWarnings("serial")
 	static DefaultTableModel model = new DefaultTableModel(rowData, columnNames) {
 		public boolean isCellEditable(int i, int c) {
@@ -70,7 +71,6 @@ public class Scheduler {
 		super();
 		connection = mainConnection;
 		username = userName;
-
 		data = cdm;
 		mainFrame = new JFrame("Scheduler");
 		cpf = new CalendarPanelFactory(username, connection, data, mainFrame);
@@ -78,6 +78,13 @@ public class Scheduler {
 		//cp = cpf.makePanel("default");
 		start();
 	}
+	
+	Scheduler(Mediator mainMD){
+		super();
+		md = mainMD;
+		new Scheduler(md.username, md.connection, md.data, md.theme);
+	}
+	
 	public void lock() {
 		state_lock=1;
 		LockBut.addActionListener(uc);//command변
