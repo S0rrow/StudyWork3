@@ -85,6 +85,7 @@ public class AccountInfoFrame extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				int dialogResult = JOptionPane.showConfirmDialog(null, "Log out?");
 				if(dialogResult==JOptionPane.YES_OPTION) {
+					md = new MediatorBuilder().setConnectivity(connection).setCDM(data).build();
 					md.callBack();
 					dispose();
 				}

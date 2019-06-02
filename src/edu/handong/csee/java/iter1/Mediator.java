@@ -25,6 +25,7 @@ public class Mediator {
 	}
 	
 	public void callBack() {
-		new InitialFrame(connection, data).initiateFrame();
+		InitialFrame frame = new InitialFrame(connection, data);
+		frame.initiateFrame();
 	}
 }
