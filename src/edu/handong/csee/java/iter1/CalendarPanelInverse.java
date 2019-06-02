@@ -13,8 +13,8 @@ public class CalendarPanelInverse extends CalendarPanelInstance {
 	public static final Color BUTTON_COLOR = Color.black;
 	public static final Color BUTTON_TEXT_COLOR = Color.white;
 
-	public CalendarPanelInverse(String userName, Connectivity mainConnection, CalendarDataManager cdm, JFrame frame) {
-		super(userName, mainConnection, cdm, frame);
+	public CalendarPanelInverse(String userName, Connectivity mainConnection, CalendarDataManager cdm, JFrame frame,Reactor ed) {
+		super(userName, mainConnection, cdm, frame,ed);
 		curTheme = "inverse";
 		themeBut.setText("default");
 		for (int i = 0; i < CalendarDataManager.CAL_HEIGHT; i++) {

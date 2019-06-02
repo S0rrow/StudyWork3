@@ -24,6 +24,7 @@ public class ScheduleList extends JFrame {
 	FileButListener f2 = new FileButListener();
 	JButton add = new JButton("추가");
 	JButton cancel = new JButton("취소");
+	Reactor ed;
 
 	/*
 	 * public static void main(String[] args) { EventQueue.invokeLater(new
@@ -36,7 +37,8 @@ public class ScheduleList extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	ScheduleList(CalendarPanel CP, CalendarDataManager cdm, String userName) {
+	ScheduleList(CalendarPanel CP, CalendarDataManager cdm, String userName,Reactor ed) {
+		this.ed =ed;
 		setTitle("LIST 추가");
 
 		// 주의, 여기서 setDefaultCloseOperation() 정의를 하지 말아야 한다
@@ -115,6 +117,7 @@ public class ScheduleList extends JFrame {
 					ioe.printStackTrace();
 				}
 			}
+			ed.bottomInfo.setText("Sucess to add new Schedule "+textField.getText());
 			cp.readSchedule();
 			dispose();
 

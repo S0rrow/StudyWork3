@@ -7,7 +7,7 @@ public class Connectivity {
 	static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
 	static final String DB_URL = "jdbc:mysql://localhost:3306/testdb?characterEncoding=UTF-8&serverTimezone=UTC";//&serverTimezone=UTC
 	static final String USER = "root";
-	static final String PASS = "-legion98";
+	static final String PASS = "password";
 	public Connection connect;
 	public Statement statement;
 	public PreparedStatement preparedStatement;
@@ -20,7 +20,6 @@ public class Connectivity {
 		resultSet = null;
 	}
 	
-	// jdbc �뱶�씪�씠踰꾨줈 db�뿉 �뿰寃고븯湲� �쐞�븳 �븿�닔.
 	public void Connect() {
 		try {
 			Class.forName(JDBC_DRIVER);
@@ -33,7 +32,6 @@ public class Connectivity {
 			e.printStackTrace();
 		}
 	}
-	//�대━瑜� 二쇰㈃ �떎�뻾�븯湲� �쐞�븳 �븿�닔.
 	public void state(String query) {
 		try {
 			//System.out.println("creating statement...");
@@ -48,8 +46,7 @@ public class Connectivity {
 			e.printStackTrace();
 		}
 	}
-	//荑쇰━瑜� 二쇰㈃ preparedStatement濡� �떎�뻾�븯湲� �쐞�븳 �븿�닔.
-	//�빐�떦 preparedStatement�뿉 ���븳 executeUpdate �씠�썑 resultSet�쓽 媛믪쓣 executeQuery瑜� �넻�빐 諛쏆븘���빞 �븿.
+
 	public void prepareState(String query) {
 		try {
 			preparedStatement = connect.prepareStatement(query);
@@ -59,7 +56,6 @@ public class Connectivity {
 		}
 	}
 	
-	//�뜲�씠�꽣 愿�由щ�� �쐞�븳 荑쇰━瑜� 諛쏆븘 �떎�뻾�븯湲� �쐞�븳 �븿�닔
 	public void stateDataManip(String query) {
 		try {
 			//System.out.println("creating statement...");

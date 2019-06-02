@@ -39,7 +39,7 @@ public class Scheduler {
 	private int state_lock=0;
 	
 	JPanel frameBottomPanel;
-	JLabel bottomInfo = new JLabel("Welcome to Memo Calendar!");
+	//JLabel bottomInfo = new JLabel("Welcome to Memo Calendar!");
 	FileButListener fl = new FileButListener();
 
 	final static String WEEK_DAY_NAME[] = { "SUN", "MON", "TUE", "WED", "THR", "FRI", "SAT" };
@@ -47,10 +47,11 @@ public class Scheduler {
 	final String DelButMsg1 = "Schedule deleted.";
 	final String DelButMsg2 = "Not written or already deleted Schedule.";
 	final String DelButMsg3 = "<html><font color=red>ERROR : Failed to delete file</html>";
-	final String addMsg = "add";
+	final String addMsg = "add new schedule";
 	public static JTable List;
 	static Object[][] rowData = new Object[1][1];
 	static Object[] columnNames = new Object[1];
+	Reactor ed;
 	
 
 	@SuppressWarnings("serial")
@@ -70,10 +71,11 @@ public class Scheduler {
 		super();
 		connection = mainConnection;
 		username = userName;
+		ed = new Reactor();
 
 		data = cdm;
 		mainFrame = new JFrame("Scheduler");
-		cpf = new CalendarPanelFactory(username, connection, data, mainFrame);
+		cpf = new CalendarPanelFactory(username, connection, data, mainFrame, ed);
 		cp = cpf.makePanel(theme);
 		//cp = cpf.makePanel("default");
 		start();
@@ -93,6 +95,7 @@ public class Scheduler {
 	}
 
 	public void start() {
+		
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainFrame.setSize(1200, 400);
 		mainFrame.setLocationRelativeTo(null);
@@ -102,7 +105,7 @@ public class Scheduler {
 			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");// apply LookAndFeel Windows
 			SwingUtilities.updateComponentTreeUI(mainFrame);
 		} catch (Exception e) {
-			bottomInfo.setText("ERROR : LookAndFeel setting failed");
+			ed.bottomInfo.setText("ERROR : LookAndFeel setting failed");
 		}
 		infoPanel = new JPanel();
 		infoPanel.setLayout(new BorderLayout());
@@ -144,8 +147,8 @@ public class Scheduler {
 		addBut.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(state_lock==1)return;
-				new ScheduleList(cp, data, username);
-				bottomInfo.setText(addMsg);
+				new ScheduleList(cp, data, username, ed);
+				ed.bottomInfo.setText(addMsg);
 			}
 		});
 		modBut = new JButton("Modify");
@@ -161,8 +164,8 @@ public class Scheduler {
 				data.setFile();
 				String PATH = "ListData/" + username +"/"+data.curDate;
 				D_file=model.getValueAt(n, 0).toString();
-				new Meeting(PATH, D_file);
-				bottomInfo.setText("modify");
+				new Meeting(PATH, D_file,ed);
+				ed.bottomInfo.setText("modify");
 			}
 		});
 		LockBut = new JButton();
@@ -203,7 +206,8 @@ public class Scheduler {
 
 		// late added bottom Panel..
 		frameBottomPanel = new JPanel();
-		frameBottomPanel.add(bottomInfo);
+		frameBottomPanel.add(ed.bottomInfo);
+		//frameBottomPanel.add(bottomInfo);
 
 		mainFrame.setLayout(new BorderLayout());
 		//JPanel cardPanel = new JPanel().setLayout(new CardLayout());
@@ -215,7 +219,7 @@ public class Scheduler {
 		cp.focusToday();
 		data.setFile();
 		cp.readSchedule();
-		ThreadControl threadCnl = new ThreadControl(data, infoClock, bottomInfo);
+		ThreadControl threadCnl = new ThreadControl(data, infoClock, ed.bottomInfo);
 		threadCnl.start();
 	}
 	
@@ -224,12 +228,14 @@ public class Scheduler {
 		public void actionPerformed(ActionEvent e) {
 			if(state_lock==1)return;
 			String D_file;
+			String filename;
 			data.setFile();
 			String PATH = "ListData/" + username +"/"+data.curDate;
 			if (e.getSource() == delBut) {
 				int n =List.getSelectedRow();
 				if(n>=0&&n<List.getRowCount()) {
-					D_file=PATH+"/"+model.getValueAt(n, 0).toString()+".txt";
+					filename=model.getValueAt(n,0).toString();
+					D_file=PATH+"/"+filename+".txt";
 					System.out.println(D_file);
 					File f = new File(D_file);
 					if (f.exists()) {
@@ -239,9 +245,9 @@ public class Scheduler {
 						data.setFile();
 						cp.readSchedule();
 						cp.showCal();
-						bottomInfo.setText(DelButMsg1);
+						ed.bottomInfo.setText(DelButMsg1 +" "+filename);
 					} else
-						bottomInfo.setText(DelButMsg2);
+						ed.bottomInfo.setText(DelButMsg2);
 				}
 			}
 				
