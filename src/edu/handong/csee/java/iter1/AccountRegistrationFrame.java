@@ -16,14 +16,16 @@ public class AccountRegistrationFrame extends JFrame{
 	private boolean usableUsername;
 	private String usernameCache;
 	private Connectivity connection;
-	private CalendarDataManager data;
+	Mediator md;
+	AccountRegistrationFrame(Mediator mainMD){
+		md=mainMD;
+		new AccountRegistrationFrame(md.connection, md.data);
+	}
 	AccountRegistrationFrame(Connectivity mainConnection, CalendarDataManager cdm){
 		//System.out.println("Initiated new AccountRegistrationFrame.");
 		setTitle("Account Registration");
 		usableUsername = false;
 		connection = mainConnection;
-		data = cdm;
-		
 		connection.Connect();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocation(100,100);
@@ -174,8 +176,7 @@ public class AccountRegistrationFrame extends JFrame{
 						connection.insertAccount(inputUsername.getText(), new String(inputPassword.getPassword()), choiceGender.getSelection().getActionCommand(),emailAddress, inputDepartment.getText(), inputStudentid.getText(), "NO");
 						JOptionPane.showMessageDialog(null, "Sign up successful!", "SignedUp", JOptionPane.PLAIN_MESSAGE);
 						connection.close();
-						InitialFrame newMainFrame = new InitialFrame(connection, data);
-						newMainFrame.initiateFrame();
+						md.callBack();
 						dispose();
 					}
 				}
@@ -194,8 +195,7 @@ public class AccountRegistrationFrame extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				connection.close();
-				InitialFrame newMainFrame = new InitialFrame(connection, data);
-				newMainFrame.initiateFrame();
+				md.callBack();
 				dispose();
 			}
 		});

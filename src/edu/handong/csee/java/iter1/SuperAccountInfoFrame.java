@@ -16,6 +16,11 @@ public class SuperAccountInfoFrame extends JFrame{
 	private Connectivity connection;
 	private CalendarDataManager data;
 	private String theme;
+	Mediator md;
+	SuperAccountInfoFrame(Mediator mainMD){
+		md = mainMD;
+		new SuperAccountInfoFrame(md.username, md.connection, md.data, md.theme);
+	}
 	SuperAccountInfoFrame(String username, Connectivity mainConnection, CalendarDataManager cdm, String theme){
 		//System.out.println("Initiated new SignInSuperFrame.");
 		this.theme = theme;
@@ -48,8 +53,7 @@ public class SuperAccountInfoFrame extends JFrame{
 					connection.stateDataManip("DELETE FROM account_info WHERE username='"+username+"';");
 					//System.out.println("account deleted from database!");
 					connection.close();
-					InitialFrame newMainFrame = new InitialFrame(connection, data);
-					newMainFrame.initiateFrame();
+					md.callBack();
 					dispose();
 				}
 			}
@@ -93,8 +97,7 @@ public class SuperAccountInfoFrame extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				int dialogResult = JOptionPane.showConfirmDialog(null, "Log out?");
 				if(dialogResult==JOptionPane.YES_OPTION) {
-					InitialFrame newMainFrame = new InitialFrame(connection, data);
-					newMainFrame.initiateFrame();
+					md.callBack();
 					connection.close();
 					dispose();
 				}

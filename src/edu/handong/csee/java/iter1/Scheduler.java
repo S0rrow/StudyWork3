@@ -63,26 +63,21 @@ public class Scheduler {
 
 	CalendarPanelFactory cpf;
 	CalendarPanel cp;
-	public static Scheduler build(String userName, Connectivity mainConnection, CalendarDataManager cdm, String theme) {
-		return new Scheduler(userName, mainConnection, cdm, theme);
+
+	Scheduler(Mediator mainMD){
+		md = mainMD;
+		new Scheduler(md.username, md.connection, md.data, md.theme);
 	}
-	
 	Scheduler(String userName, Connectivity mainConnection, CalendarDataManager cdm, String theme) {
 		super();
 		connection = mainConnection;
 		username = userName;
 		data = cdm;
 		mainFrame = new JFrame("Scheduler");
-		cpf = new CalendarPanelFactory(username, connection, data, mainFrame);
+		cpf = new CalendarPanelFactory(username, connection, data, mainFrame, md);
 		cp = cpf.makePanel(theme);
 		//cp = cpf.makePanel("default");
 		start();
-	}
-	
-	Scheduler(Mediator mainMD){
-		super();
-		md = mainMD;
-		new Scheduler(md.username, md.connection, md.data, md.theme);
 	}
 	
 	public void lock() {

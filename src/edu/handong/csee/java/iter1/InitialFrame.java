@@ -117,7 +117,8 @@ public class InitialFrame {
 				//new AccountInfoFrame(username);
 				md = builder.setUsername(username)
 						.setConnectivity(connection)
-						.setCDM(data).setTheme("default")
+						.setCDM(data)
+						.setTheme("default")
 						.build();
 				//new Scheduler(username, connection, data, "default");
 				md.signin();
@@ -126,7 +127,8 @@ public class InitialFrame {
 			else if(connection.getElement(username, "super").equals("YES")) {
 				md = builder.setUsername(username)
 						.setConnectivity(connection)
-						.setCDM(data).setTheme("default")
+						.setCDM(data)
+						.setTheme("default")
 						.build();
 				//new SuperAccountInfoFrame(username, connection, data, "default");
 				md.superAccount();

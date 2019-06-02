@@ -51,15 +51,16 @@ public abstract class CalendarPanel {
 	JFrame mainFrame;
 	JTextArea memoArea;
 	JLabel selectedDate;
-	
+	Mediator md;
 	public String curTheme = "default";
 	
-	CalendarPanel(String userName, Connectivity mainConnection, CalendarDataManager cdm, JFrame frame) {
+	CalendarPanel(String userName, Connectivity mainConnection, CalendarDataManager cdm, JFrame frame, Mediator mainMD) {
 		super();
 		mainFrame = frame;
 		username = userName;
 		connection = mainConnection;
 		data = cdm;
+		md = mainMD;
 		calOpPanel = new JPanel();
 		todayBut = new JButton("Today");
 		todayBut.setToolTipText("Today");
@@ -277,8 +278,7 @@ public abstract class CalendarPanel {
 			}
 			else if(e.getSource() == logout) {
 				//System.out.println("logging out...");
-				InitialFrame newMainFrame = new InitialFrame(connection, data);
-				newMainFrame.initiateFrame();
+				md.callBack();
 				mainFrame.dispose();
 			}
 		}

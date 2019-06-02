@@ -11,7 +11,11 @@ import javax.swing.*;
 public class AccountInfoFrame extends JFrame{
 	private Connectivity connection;
 	private CalendarDataManager data;
-	
+	Mediator md;
+	AccountInfoFrame(Mediator mainMD){
+		md = mainMD;
+		new AccountInfoFrame(md.username, md.connection, md.data, md.theme);
+	}
 	AccountInfoFrame(String username, Connectivity mainConnection, CalendarDataManager cdm, String theme) {
 		//System.out.println("Initiated new AccountInfoFrame.");
 		setTitle("Signed In");
@@ -81,8 +85,7 @@ public class AccountInfoFrame extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				int dialogResult = JOptionPane.showConfirmDialog(null, "Log out?");
 				if(dialogResult==JOptionPane.YES_OPTION) {
-					InitialFrame newMainFrame = new InitialFrame(connection, data);
-					newMainFrame.initiateFrame();
+					md.callBack();
 					dispose();
 				}
 			}

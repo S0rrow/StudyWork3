@@ -13,18 +13,18 @@ public class Mediator {
 	}
 	
 	public void registrate() {
-		new AccountRegistrationFrame(connection, data);
+		new AccountRegistrationFrame(this);
 	}
 	
 	public void signin() {
-		new Scheduler(username, connection, data, "default");
+		new Scheduler(this);
 	}
 	
 	public void superAccount() {
-		new SuperAccountInfoFrame(username, connection, data, "default");
+		new SuperAccountInfoFrame(this);
 	}
 	
-	public void initFrame() {
-		new InitialFrame(connection, data);
+	public void callBack() {
+		new InitialFrame(connection, data).initiateFrame();
 	}
 }

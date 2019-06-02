@@ -9,8 +9,8 @@ import javax.swing.JLabel;
 
 public class CalendarPanelInstance extends CalendarPanel {
 
-	CalendarPanelInstance(String userName, Connectivity mainConnection, CalendarDataManager cdm, JFrame frame) {
-		super(userName, mainConnection, cdm, frame);
+	CalendarPanelInstance(String userName, Connectivity mainConnection, CalendarDataManager cdm, JFrame frame, Mediator md) {
+		super(userName, mainConnection, cdm, frame, md);
 	}
 	public void readSchedule() {
 		data.setFile();
